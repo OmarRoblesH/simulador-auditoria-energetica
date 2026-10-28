@@ -34,12 +34,12 @@
         <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-3">
             <h5 class="text-white mb-4"><i class="fa-solid fa-bolt text-warning me-2"></i>Simulador ISO 50001</h5>
             <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link active" href="#" onclick="showStep(0)"><i class="fa-solid fa-route me-2"></i>Inicio / Compuerta 0</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(1)"><i class="fa-solid fa-file-invoice-dollar me-2"></i>Bloque 1: Datos & OCR</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(2)"><i class="fa-solid fa-sliders me-2"></i>Bloque 2: Eval. Técnica</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(3)"><i class="fa-solid fa-award me-2"></i>Bloque 3: ISO 50001</a></li>
-                <li class="nav-item" id="nav-bloque4"><a class="nav-link" href="#" onclick="showStep(4)"><i class="fa-solid fa-boxes-stacked me-2"></i>Bloque 4: Inventario</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(5)"><i class="fa-solid fa-chart-pie me-2"></i>Bloque 5: Dashboards</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#" onclick="showStep(0)"><i class="fa-solid fa-route me-2"></i>Inicio / Ingreso de Empresas y Edificios</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(1)"><i class="fa-solid fa-file-invoice-dollar me-2"></i>Datos & OCR</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(2)"><i class="fa-solid fa-sliders me-2"></i>Evaluación Técnica</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(3)"><i class="fa-solid fa-award me-2"></i>Auditoría ISO 50001</a></li>
+                <li class="nav-item" id="nav-bloque4"><a class="nav-link" href="#" onclick="showStep(4)"><i class="fa-solid fa-boxes-stacked me-2"></i>Inventario de equipo</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(5)"><i class="fa-solid fa-chart-pie me-2"></i>Consumoss</a></li>
             </ul>
         </nav>
 
@@ -52,10 +52,10 @@
                     <h3><i class="fa-solid fa-filter text-primary me-2"></i>Validación de Inventario</h3>
                     <p class="text-muted">Determine la disponibilidad de datos de inventario previa</p>
                     <div class="mb-4">
-                        <label class="form-label fw-bold">¿La empresa ya cuenta con una base de datos, inventario de activos o listado de equipos disponible (Excel, ERP, etc.)?[cite: 3]</label>
+                        <label class="form-label fw-bold">¿La empresa ya cuenta con una base de datos, inventario de activos o listado de equipos disponible</label>
                         <select id="filtro_0_1" class="form-select" onchange="evaluarCompuerta0()">
-                            <option value="NO">No (Requiere Inventario Guiado - Bloque 4)</option>
-                            <option value="SI">Sí (Cargar archivo existente - Paso 3)</option>
+                            <option value="NO">No (Requiere Inventario Guiado)</option>
+                            <option value="SI">Sí (Cargar archivo existente)</option>
                         </select>
                     </div>
                     <div id="paso3_upload" class="d-none alert alert-info">
