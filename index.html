@@ -59,7 +59,7 @@
                         </select>
                     </div>
                     <div id="paso3_upload" class="d-none alert alert-info">
-                        <h5>Paso 3: Carga de Archivo de Inventario</h5>
+                        <h5>Carga de Archivo de Inventario</h5>
                         <input type="file" class="form-control mt-2" id="archivo_inventario">
                     </div>
                     <button class="btn btn-primary" onclick="showStep(1)">Siguiente: Bloque 1 <i class="fa-solid fa-arrow-right ms-2"></i></button>
@@ -69,27 +69,27 @@
             <!-- BLOQUE 1: DATOS GENERALES, FACTURACIÓN Y OCR -->
             <div id="step-1" class="step-section">
                 <div class="card p-4">
-                    <h3><i class="fa-solid fa-building text-primary me-2"></i>Bloque 1: Datos Generales y Facturación</h3>
+                    <h3><i class="fa-solid fa-building text-primary me-2"></i>Datos Generales de la empresa y Facturación</h3>
                     <form id="form-bloque1">
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Empresa</label>
-                                <input type="text" class="form-control" id="b1_empresa" value="VITRO">
+                                <input type="text" class="form-control" id="b1_empresa" value="Ingesa Empresa">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Nombre del Edificio / Sitio</label>
-                                <input type="text" class="form-control" id="b1_sitio" value="Planta 5">
+                                <input type="text" class="form-control" id="b1_sitio" value="Ingresa edificio">
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Área (m²)[cite: 3]</label>
-                                <input type="number" class="form-control" id="b1_area" value="12000">
+                                <label class="form-label">Área (m²)</label>
+                                <input type="number" class="form-control" id="b1_area" value="0 m²">
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Días de Operación / Año[cite: 3]</label>
+                                <label class="form-label">Días de Operación al Año</label>
                                 <input type="number" class="form-control" id="b1_dias" value="365">
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Horas Operativas / Día[cite: 3]</label>
+                                <label class="form-label">Horas Operativas por Día</label>
                                 <input type="number" class="form-control" id="b1_horas" value="24">
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                             <p class="mt-2 text-primary">Procesando imagen con IA OCR...</p>
                         </div>
 
-                        <h5 class="fw-bold mt-4">Histórico de Consumos Últimos 12 Meses[cite: 2, 3]</h5>
+                        <h5 class="fw-bold mt-4">Histórico de Consumos Últimos 12 Meses</h5>
                         <table class="table table-bordered align-middle mt-2" id="tablaFacturas">
                             <thead class="table-dark">
                                 <tr>
@@ -121,6 +121,15 @@
                                 <tr><td>Enero</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="45000"></td><td><input type="number" class="form-control" value="90000"></td></tr>
                                 <tr><td>Febrero</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="48000"></td><td><input type="number" class="form-control" value="96000"></td></tr>
                                 <tr><td>Marzo</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" id="marzoConsumo" value="52000"></td><td><input type="number" class="form-control" value="104000"></td></tr>
+                                <tr><td>Mayo</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="45000"></td><td><input type="number" class="form-control" value="90000"></td></tr>
+                                <tr><td>Junio</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="48000"></td><td><input type="number" class="form-control" value="96000"></td></tr>
+                                <tr><td>Julio</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" id="marzoConsumo" value="52000"></td><td><input type="number" class="form-control" value="104000"></td></tr>
+                                <tr><td>Agosto</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="45000"></td><td><input type="number" class="form-control" value="90000"></td></tr>
+                                <tr><td>Septiembre</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="48000"></td><td><input type="number" class="form-control" value="96000"></td></tr>
+                                <tr><td>Octubre</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" id="marzoConsumo" value="52000"></td><td><input type="number" class="form-control" value="104000"></td></tr>
+                                <tr><td>Noviembre</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="45000"></td><td><input type="number" class="form-control" value="90000"></td></tr>
+                                <tr><td>Diciembre</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="48000"></td><td><input type="number" class="form-control" value="96000"></td></tr>
+    
                             </tbody>
                         </table>
                     </form>
