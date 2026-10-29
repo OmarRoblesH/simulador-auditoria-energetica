@@ -244,36 +244,47 @@
             <!-- BLOQUE 4: INVENTARIO GUIADO DE EQUIPOS -->
             <div id="step-4" class="step-section">
                 <div class="card p-4">
-                    <h3><i class="fa-solid fa-list-check text-primary me-2"></i>Inventario Guiado de Equipos</h3>
-                    <p class="text-muted">Captura por niveles de detalle para concatenar al simulador.</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h3 class="mb-1"><i class="fa-solid fa-list-check text-primary me-2"></i>Inventario Guiado de Equipos</h3>
+                            <p class="text-muted mb-0">Captura por niveles de detalle para concatenar al simulador.</p>
+                        </div>
+                        <button class="btn btn-success" onclick="agregarFila()">
+                            <i class="fa-solid fa-plus me-1"></i> Agregar Registro
+                        </button>
+                    </div>
                     
-                    <table class="table table-striped" id="tablaEquipos">
+                    <table class="table table-striped align-middle" id="tablaEquipos">
                         <thead>
                             <tr>
                                 <th>No. Registro</th>
                                 <th>Equipo</th>
                                 <th>Categoría</th>
                                 <th>Consumo / Potencia</th>
+                                <th style="width: 120px;">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbodyEquipos">
                             <tr>
                                 <td>VT202619OC</td>
                                 <td>Lámpara LED</td>
                                 <td>Sistemas de iluminación</td>
                                 <td>500 kW</td>
+                                <td>-</td>
                             </tr>
                             <tr>
                                 <td>FE202619A</td>
                                 <td>Minisplit</td>
                                 <td>Generación de frío y climatización</td>
                                 <td>3500 kW</td>
+                                <td>-</td>
                             </tr>
                             <tr>
                                 <td>GE202619P</td>
                                 <td>Sanitario / Hidro</td>
                                 <td>Agua y agua caliente sanitaria</td>
                                 <td>3000 m³</td>
+                                <td>-</td>
                             </tr>
                         </tbody>
                     </table>
@@ -356,23 +367,10 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
 
-<div class="d-flex justify-content-between mt-4">
-            <button class="btn btn-secondary" onclick="showStep(3)">Anterior</button>
-            <button class="btn btn-primary" onclick="generarSimulacionYMostrarDashboards()">
-                Generar Resultados <i class="fa-solid fa-chart-line ms-2"></i>
-            </button>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-                        
+                    <div class="d-flex justify-content-between mt-4">
+                        <button class="btn btn-secondary" onclick="showStep(4)">Anterior</button>
                     </div>
                 </div>
             </div>
@@ -484,65 +482,57 @@
         });
     }
 
-function agregarFila() {
-    const tbody = document.getElementById('tbodyEquipos');
-    
-    // Crear la nueva fila TR
-    const nuevaFila = document.createElement('tr');
-    
-    // Insertar los inputs con placeholder para orientar al usuario
-    nuevaFila.innerHTML = `
-        <td>
-            <input type="text" class="form-control form-control-sm" placeholder="Ingresa clave (ej. VT202620)" />
-        </td>
-        <td>
-            <input type="text" class="form-control form-control-sm" placeholder="Ingresa equipo (ej. Compresor)" />
-        </td>
-        <td>
-            <input type="text" class="form-control form-control-sm" placeholder="Ingresa categoría (ej. Motor)" />
-        </td>
-        <td>
-            <input type="text" class="form-control form-control-sm" placeholder="Ingresa consumo (ej. 1200 kW)" />
-        </td>
-        <td>
-            <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFila(this)">
-                <i class="fa-solid fa-check"></i>
-            </button>
+    function agregarFila() {
+        const tbody = document.getElementById('tbodyEquipos');
+        
+        const nuevaFila = document.createElement('tr');
+        nuevaFila.innerHTML = `
+            <td>
+                <input type="text" class="form-control form-control-sm" placeholder="Ingresa clave (ej. VT202620)" />
+            </td>
+            <td>
+                <input type="text" class="form-control form-control-sm" placeholder="Ingresa equipo (ej. Compresor)" />
+            </td>
+            <td>
+                <input type="text" class="form-control form-control-sm" placeholder="Ingresa categoría (ej. Motor)" />
+            </td>
+            <td>
+                <input type="text" class="form-control form-control-sm" placeholder="Ingresa consumo (ej. 1200 kW)" />
+            </td>
+            <td>
+                <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFila(this)">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </td>
+        `;
+        
+        tbody.appendChild(nuevaFila);
+    }
+
+    function guardarFila(btn) {
+        const fila = btn.closest('tr');
+        const inputs = fila.querySelectorAll('input');
+        
+        inputs.forEach(input => {
+            const td = input.parentElement;
+            td.textContent = input.value.trim() !== "" ? input.value : "-";
+        });
+        
+        const tdAcciones = fila.cells[4];
+        tdAcciones.innerHTML = `
             <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)">
                 <i class="fa-solid fa-trash"></i>
             </button>
-        </td>
-    `;
-    
-    // Agregar la fila al final de la tabla
-    tbody.appendChild(nuevaFila);
-}
+        `;
+    }
 
-function guardarFila(btn) {
-    const fila = btn.closest('tr');
-    const inputs = fila.querySelectorAll('input');
-    
-    // Reemplazar inputs por texto simple manteniendo los valores ingresados
-    inputs.forEach(input => {
-        const td = input.parentElement;
-        td.textContent = input.value.trim() !== "" ? input.value : "-";
-    });
-    
-    // Actualizar la columna de acciones a un estado fijo
-    const tdAcciones = fila.cells[4];
-    tdAcciones.innerHTML = `
-        <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)">
-            <i class="fa-solid fa-trash"></i>
-        </button>
-    `;
-}
-
-function eliminarFila(btn) {
-    const fila = btn.closest('tr');
-    fila.remove();
-}
-
-    
+    function eliminarFila(btn) {
+        const fila = btn.closest('tr');
+        fila.remove();
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
