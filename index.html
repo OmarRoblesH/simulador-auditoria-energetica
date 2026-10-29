@@ -247,37 +247,83 @@
                 <div class="card p-4">
                     <h3><i class="fa-solid fa-list-check text-primary me-2"></i>Inventario Guiado de Equipos</h3>
                     <p class="text-muted">Captura por niveles de detalle para concatenar al simulador.</p>
-
                     <table class="table table-striped" id="tablaEquipos">
-                        <thead>
-                            <tr>
-                                <th>No. Registro</th>
-                                <th>Equipo</th>
-                                <th>Categoría</th>
-                                <th>Consumo / Potencia</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>VT202619OC</td>
-                                <td>Lámpara LED</td>
-                                <td>Sistemas de iluminación</td>
-                                <td>500 kW</td>
-                            </tr>
-                            <tr>
-                                <td>FE202619A</td>
-                                <td>Minisplit</td>
-                                <td>Generación de frío y climatización</td>
-                                <td>3500 kW</td>
-                            </tr>
-                            <tr>
-                                <td>GE202619P</td>
-                                <td>Sanitario / Hidro</td>
-                                <td>Agua y agua caliente sanitaria</td>
-                                <td>3000 m³</td>
-                            </tr>
-                        </tbody>
-                    </table>
+    <thead>
+        <tr>
+            <th>No. Registro</th>
+            <th>Equipo</th>
+            <th>Categoría</th>
+            <th>Consumo / Potencia</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="text" class="form-control" placeholder="Ingresar clave" value="VT202619OC"></td>
+            <td><input type="text" class="form-control" placeholder="Ingresar ítem" value="Lámpara LED"></td>
+            <td><input type="text" class="form-control" placeholder="Ingresar categoría" value="Sistemas de iluminación"></td>
+            <td><input type="text" class="form-control" placeholder="Ingresar consumo" value="500 kW"></td>
+            <td><button type="button" class="btn btn-danger btn-sm" onclick="eliminarFila(this)">Eliminar</button></td>
+        </tr>
+        <tr>
+            <td><input type="text" class="form-control" placeholder="Ingresar clave" value="FE202619A"></td>
+            <td><input type="text" class="form-control" placeholder="Ingresar ítem" value="Minisplit"></td>
+            <td><input type="text" class="form-control" placeholder="Ingresar categoría" value="Generación de frío y climatización"></td>
+            <td><input type="text" class="form-control" placeholder="Ingresar consumo" value="3500 kW"></td>
+            <td><button type="button" class="btn btn-danger btn-sm" onclick="eliminarFila(this)">Eliminar</button></td>
+        </tr>
+        <tr>
+            <td><input type="text" class="form-control" placeholder="Ingresar clave" value="GE202619P"></td>
+            <td><input type="text" class="form-control" placeholder="Ingresar ítem" value="Sanitario / Hidro"></td>
+            <td><input type="text" class="form-control" placeholder="Ingresar categoría" value="Agua y agua caliente sanitaria"></td>
+            <td><input type="text" class="form-control" placeholder="Ingresar consumo" value="3000 m³"></td>
+            <td><button type="button" class="btn btn-danger btn-sm" onclick="eliminarFila(this)">Eliminar</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Botón para agregar filas -->
+<button type="button" class="btn btn-primary mt-2" onclick="agregarFila()">Agregar otro registro</button>
+
+<script>
+function agregarFila() {
+    const tbody = document.querySelector('#tablaEquipos tbody');
+    const filas = tbody.querySelectorAll('tr');
+    
+    // Validar que todos los campos de la última fila estén llenos antes de agregar otra
+    if (filas.length > 0) {
+        const ultimaFila = filas[filas.length - 1];
+        const inputs = ultimaFila.querySelectorAll('input');
+        
+        for (let input of inputs) {
+            if (input.value.trim() === '') {
+                alert('Por favor complete todos los campos de la fila actual antes de agregar un nuevo registro.');
+                input.focus();
+                return;
+            }
+        }
+    }
+
+    // Crear la nueva fila con los placeholders requeridos
+    const nuevaFila = document.createElement('tr');
+    nuevaFila.innerHTML = `
+        <td><input type="text" class="form-control" placeholder="Ingresar clave"></td>
+        <td><input type="text" class="form-control" placeholder="Ingresar ítem"></td>
+        <td><input type="text" class="form-control" placeholder="Ingresar categoría"></td>
+        <td><input type="text" class="form-control" placeholder="Ingresar consumo"></td>
+        <td><button type="button" class="btn btn-danger btn-sm" onclick="eliminarFila(this)">Eliminar</button></td>
+    `;
+    
+    tbody.appendChild(nuevaFila);
+}
+
+function eliminarFila(boton) {
+    const fila = boton.closest('tr');
+    fila.remove();
+}
+</script>
+
+
 
                     <div class="d-flex justify-content-between mt-4">
                         <button class="btn btn-secondary" onclick="showStep(3)">Anterior</button>
