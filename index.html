@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Tesseract.js para OCR (Reconocimiento Fotográfico) -->
+    <!-- Tesseract.js para OCR -->
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
     <style>
         body { background-color: #f4f6f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .sidebar { background-color: #1e293b; color: white; min-height: 100vh; }
-        .sidebar .nav-link { color: #94a3b8; margin: 5px 0; border-radius: 6px; }
+        .sidebar .nav-link { color: #94a3b8; margin: 5px 0; border-radius: 6px; cursor: pointer; }
         .sidebar .nav-link.active, .sidebar .nav-link:hover { background-color: #334155; color: #fff; }
         .card { border: none; border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
         .btn-primary { background-color: #2563eb; border: none; }
@@ -34,12 +34,12 @@
         <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-3">
             <h5 class="text-white mb-4"><i class="fa-solid fa-bolt text-warning me-2"></i>Simulador ISO 50001</h5>
             <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link active" href="#" onclick="showStep(0)"><i class="fa-solid fa-route me-2"></i>Inicio / Ingreso de Empresas y Edificios</a></li>
-                <li class="nav-item" id="nav-bloque4"><a class="nav-link" href="#" onclick="showStep(4)"><i class="fa-solid fa-boxes-stacked me-2"></i>Inventario de equipo</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(1)"><i class="fa-solid fa-file-invoice-dollar me-2"></i>Datos & OCR</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(2)"><i class="fa-solid fa-sliders me-2"></i>Evaluación Técnica</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(3)"><i class="fa-solid fa-award me-2"></i>Auditoría ISO 50001</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(5)"><i class="fa-solid fa-chart-pie me-2"></i>Consumos</a></li>
+                <li class="nav-item"><a class="nav-link active" data-step="0" onclick="showStep(0)"><i class="fa-solid fa-route me-2"></i>Inicio / Registro</a></li>
+                <li class="nav-item" id="nav-bloque4"><a class="nav-link" data-step="4" onclick="showStep(4)"><i class="fa-solid fa-boxes-stacked me-2"></i>Inventario de equipo</a></li>
+                <li class="nav-item"><a class="nav-link" data-step="1" onclick="showStep(1)"><i class="fa-solid fa-file-invoice-dollar me-2"></i>Datos & OCR</a></li>
+                <li class="nav-item"><a class="nav-link" data-step="2" onclick="showStep(2)"><i class="fa-solid fa-sliders me-2"></i>Evaluación Técnica</a></li>
+                <li class="nav-item"><a class="nav-link" data-step="3" onclick="showStep(3)"><i class="fa-solid fa-award me-2"></i>Auditoría ISO 50001</a></li>
+                <li class="nav-item"><a class="nav-link" data-step="5" onclick="showStep(5)"><i class="fa-solid fa-chart-pie me-2"></i>Consumos</a></li>
             </ul>
         </nav>
 
@@ -142,14 +142,14 @@
                             <tbody id="tbodyConsumos">
                                 <tr><td><input type="text" class="form-control form-control-sm" value="Enero"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="45000"></td><td><input type="number" class="form-control form-control-sm" value="90000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
                                 <tr><td><input type="text" class="form-control form-control-sm" value="Febrero"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="48000"></td><td><input type="number" class="form-control form-control-sm" value="96000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Marzo"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" id="marzoConsumo" value="52000"></td><td><input type="number" class="form-control form-control-sm" value="104000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
+                                <tr><td><input type="text" class="form-control form-control-sm" value="Marzo"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="52000"></td><td><input type="number" class="form-control form-control-sm" value="104000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
                                 <tr><td><input type="text" class="form-control form-control-sm" value="Abril"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="46000"></td><td><input type="number" class="form-control form-control-sm" value="92000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
                                 <tr><td><input type="text" class="form-control form-control-sm" value="Mayo"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="45000"></td><td><input type="number" class="form-control form-control-sm" value="90000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
                                 <tr><td><input type="text" class="form-control form-control-sm" value="Junio"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="48000"></td><td><input type="number" class="form-control form-control-sm" value="96000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Julio"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" id="julioConsumo" value="52000"></td><td><input type="number" class="form-control form-control-sm" value="104000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
+                                <tr><td><input type="text" class="form-control form-control-sm" value="Julio"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="52000"></td><td><input type="number" class="form-control form-control-sm" value="104000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
                                 <tr><td><input type="text" class="form-control form-control-sm" value="Agosto"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="45000"></td><td><input type="number" class="form-control form-control-sm" value="90000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
                                 <tr><td><input type="text" class="form-control form-control-sm" value="Septiembre"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="48000"></td><td><input type="number" class="form-control form-control-sm" value="96000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Octubre"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" id="octubreConsumo" value="52000"></td><td><input type="number" class="form-control form-control-sm" value="104000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
+                                <tr><td><input type="text" class="form-control form-control-sm" value="Octubre"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="52000"></td><td><input type="number" class="form-control form-control-sm" value="104000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
                                 <tr><td><input type="text" class="form-control form-control-sm" value="Noviembre"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="45000"></td><td><input type="number" class="form-control form-control-sm" value="90000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
                                 <tr><td><input type="text" class="form-control form-control-sm" value="Diciembre"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="48000"></td><td><input type="number" class="form-control form-control-sm" value="96000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
                             </tbody>
@@ -205,7 +205,7 @@
                             </div>
                         </div>
 
-                        <!-- 2.4 Iluminación (Siempre Visible) -->
+                        <!-- 2.4 Iluminación -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse24">
@@ -294,33 +294,33 @@
                                 <td>Lámpara LED</td>
                                 <td>Sistemas de iluminación</td>
                                 <td>500 kW</td>
-                                <td>-</td>
+                                <td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td>
                             </tr>
                             <tr>
                                 <td>FE202619A</td>
                                 <td>Minisplit</td>
                                 <td>Generación de frío y climatización</td>
                                 <td>3500 kW</td>
-                                <td>-</td>
+                                <td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td>
                             </tr>
                             <tr>
                                 <td>GE202619P</td>
                                 <td>Sanitario / Hidro</td>
                                 <td>Agua y agua caliente sanitaria</td>
                                 <td>3000 m³</td>
-                                <td>-</td>
+                                <td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td>
                             </tr>
                         </tbody>
                     </table>
 
                     <div class="d-flex justify-content-between mt-4">
                         <button class="btn btn-secondary" onclick="showStep(3)">Anterior</button>
-                        <button class="btn btn-primary" onclick="generarSimulacionYMostrarDashboards()">Generar Resultados<i class="fa-solid fa-chart-line ms-2"></i></button>
+                        <button class="btn btn-primary" onclick="generarSimulacionYMostrarDashboards()">Generar Resultados <i class="fa-solid fa-chart-line ms-2"></i></button>
                     </div>
                 </div>
             </div>
 
-            <!-- BLOQUE 5 & DASHBOARDS (RESULTADOS) -->
+            <!-- BLOQUE 5: DASHBOARD DE RESULTADOS -->
             <div id="step-5" class="step-section">
                 <div class="card p-4 mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -407,13 +407,18 @@
 <script>
     let chart1, chart2;
 
+    // Navegación corregida mediante dataset
     function showStep(stepIndex) {
         document.querySelectorAll('.step-section').forEach(el => el.classList.remove('active'));
-        document.getElementById(`step-${stepIndex}`).classList.add('active');
+        const targetStep = document.getElementById(`step-${stepIndex}`);
+        if(targetStep) targetStep.classList.add('active');
         
-        document.querySelectorAll('.sidebar .nav-link').forEach((el, idx) => {
-            if(idx === stepIndex) el.classList.add('active');
-            else el.classList.remove('active');
+        document.querySelectorAll('.sidebar .nav-link').forEach(el => {
+            if(parseInt(el.getAttribute('data-step')) === stepIndex) {
+                el.classList.add('active');
+            } else {
+                el.classList.remove('active');
+            }
         });
     }
 
@@ -441,7 +446,7 @@
         }
     }
 
-    // Funciones de gestión de filas dinámicas (Datos Generales)
+    // Datos Generales
     function agregarFilaDatoGeneral() {
         const tbody = document.getElementById('tbodyDatosGenerales');
         const nuevaFila = document.createElement('tr');
@@ -460,11 +465,10 @@
     }
 
     function guardarFilaGenerica(btn) {
-        const fila = btn.closest('tr');
-        alert("Registro guardado temporalmente.");
+        alert("Registro guardado correctamente.");
     }
 
-    // Funciones de gestión de filas dinámicas (Consumos de 12 meses)
+    // Consumos
     function agregarFilaConsumo() {
         const tbody = document.getElementById('tbodyConsumos');
         const nuevaFila = document.createElement('tr');
@@ -478,7 +482,7 @@
         tbody.appendChild(nuevaFila);
     }
 
-    // OCR con Tesseract.js actualizado para distribuir en consumos
+    // OCR con Tesseract.js
     function ejecutarOCR(fileInput) {
         const file = fileInput.files[0];
         if(!file) return;
@@ -490,12 +494,11 @@
             { logger: m => console.log(m) }
         ).then(({ data: { text } }) => {
             document.getElementById('ocrSpinner').classList.add('d-none');
-            alert("Lectura OCR Completada. Texto extraído y aplicado a los registros de consumo.");
+            alert("Lectura OCR Completada. Datos actualizados.");
             
             const matchKwh = text.match(/(\d+[\d,.]*)\s*(kWh|kw)/i);
             if(matchKwh) {
                 const valDetectado = matchKwh[1].replace(/,/g, '');
-                // Rellenar automáticamente todos los inputs de consumo detectados
                 const inputsConsumo = document.querySelectorAll('#tbodyConsumos .val-consumo');
                 inputsConsumo.forEach(input => {
                     input.value = valDetectado;
@@ -503,7 +506,7 @@
             }
         }).catch(err => {
             document.getElementById('ocrSpinner').classList.add('d-none');
-            alert("Error procesando OCR. Suba una imagen clara.");
+            alert("Error procesando OCR. Intente con otra imagen.");
         });
     }
 
@@ -523,8 +526,8 @@
                 labels: ['Ene', 'Feb', 'Marzo', 'Abr', 'May'],
                 datasets: [{
                     label: 'Consumo kWh',
-                    data: [0, 1000, 52000, 1000, 0],
-                    backgroundColor: '#4338ca',
+                    data: [45000, 48000, 52000, 46000, 45000],
+                    backgroundColor: 'rgba(67, 56, 202, 0.2)',
                     borderColor: '#4338ca',
                     fill: true,
                     tension: 0.1
@@ -537,10 +540,10 @@
         chart2 = new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: ['Sistemas de Climatización'],
+                labels: ['Iluminación', 'Climatización', 'Agua/Hidro'],
                 datasets: [{
                     label: 'Consumo Categoría',
-                    data: [35000],
+                    data: [500, 3500, 3000],
                     backgroundColor: '#8685c9'
                 }]
             },
@@ -548,33 +551,20 @@
         });
     }
 
+    // Equipos
     function agregarFila() {
         const tbody = document.getElementById('tbodyEquipos');
-        
         const nuevaFila = document.createElement('tr');
         nuevaFila.innerHTML = `
+            <td><input type="text" class="form-control form-control-sm" placeholder="Ingresa clave" /></td>
+            <td><input type="text" class="form-control form-control-sm" placeholder="Ingresa equipo" /></td>
+            <td><input type="text" class="form-control form-control-sm" placeholder="Ingresa categoría" /></td>
+            <td><input type="text" class="form-control form-control-sm" placeholder="Ingresa consumo" /></td>
             <td>
-                <input type="text" class="form-control form-control-sm" placeholder="Ingresa clave (ej. VT202620)" />
-            </td>
-            <td>
-                <input type="text" class="form-control form-control-sm" placeholder="Ingresa equipo (ej. Compresor)" />
-            </td>
-            <td>
-                <input type="text" class="form-control form-control-sm" placeholder="Ingresa categoría (ej. Motor)" />
-            </td>
-            <td>
-                <input type="text" class="form-control form-control-sm" placeholder="Ingresa consumo (ej. 1200 kW)" />
-            </td>
-            <td>
-                <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFila(this)">
-                    <i class="fa-solid fa-check"></i>
-                </button>
-                <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
+                <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFila(this)"><i class="fa-solid fa-check"></i></button>
+                <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button>
             </td>
         `;
-        
         tbody.appendChild(nuevaFila);
     }
 
@@ -589,15 +579,13 @@
         
         const tdAcciones = fila.cells[4];
         tdAcciones.innerHTML = `
-            <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)">
-                <i class="fa-solid fa-trash"></i>
-            </button>
+            <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button>
         `;
     }
 
     function eliminarFila(btn) {
         const fila = btn.closest('tr');
-        fila.remove();
+        if(fila) fila.remove();
     }
 </script>
 
