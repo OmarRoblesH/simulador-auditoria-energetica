@@ -1,11 +1,11 @@
-<!DOC>
-    <link href="https://cdn.TYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Auditoría Energética & ISO 50001</title>
-    <!-- Bootstrap 5 CSS --jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js -->
@@ -35,11 +35,11 @@
             <h5 class="text-white mb-4"><i class="fa-solid fa-bolt text-warning me-2"></i>Simulador ISO 50001</h5>
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link active" href="#" onclick="showStep(0)"><i class="fa-solid fa-route me-2"></i>Inicio / Ingreso de Empresas y Edificios</a></li>
-                 <li class="nav-item" id="nav-bloque4"><a class="nav-link" href="#" onclick="showStep(4)"><i class="fa-solid fa-boxes-stacked me-2"></i>Inventario de equipo</a></li>
+                <li class="nav-item" id="nav-bloque4"><a class="nav-link" href="#" onclick="showStep(4)"><i class="fa-solid fa-boxes-stacked me-2"></i>Inventario de equipo</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(1)"><i class="fa-solid fa-file-invoice-dollar me-2"></i>Datos & OCR</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(2)"><i class="fa-solid fa-sliders me-2"></i>Evaluación Técnica</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(3)"><i class="fa-solid fa-award me-2"></i>Auditoría ISO 50001</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(5)"><i class="fa-solid fa-chart-pie me-2"></i>Consumoss</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" onclick="showStep(5)"><i class="fa-solid fa-chart-pie me-2"></i>Consumos</a></li>
             </ul>
         </nav>
 
@@ -52,7 +52,7 @@
                     <h3><i class="fa-solid fa-filter text-primary me-2"></i>Validación de Inventario</h3>
                     <p class="text-muted">Determine la disponibilidad de datos de inventario previa</p>
                     <div class="mb-4">
-                        <label class="form-label fw-bold">¿La empresa ya cuenta con una base de datos, inventario de activos o listado de equipos disponible</label>
+                        <label class="form-label fw-bold">¿La empresa ya cuenta con una base de datos, inventario de activos o listado de equipos disponible?</label>
                         <select id="filtro_0_1" class="form-select" onchange="evaluarCompuerta0()">
                             <option value="NO">No (Requiere Inventario Guiado)</option>
                             <option value="SI">Sí (Cargar archivo existente)</option>
@@ -82,7 +82,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Área (m²)</label>
-                                <input type="number" class="form-control" id="b1_area" value="0 m²">
+                                <input type="number" class="form-control" id="b1_area" value="0">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Días de Operación al Año</label>
@@ -123,13 +123,12 @@
                                 <tr><td>Marzo</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" id="marzoConsumo" value="52000"></td><td><input type="number" class="form-control" value="104000"></td></tr>
                                 <tr><td>Mayo</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="45000"></td><td><input type="number" class="form-control" value="90000"></td></tr>
                                 <tr><td>Junio</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="48000"></td><td><input type="number" class="form-control" value="96000"></td></tr>
-                                <tr><td>Julio</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" id="marzoConsumo" value="52000"></td><td><input type="number" class="form-control" value="104000"></td></tr>
+                                <tr><td>Julio</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" id="julioConsumo" value="52000"></td><td><input type="number" class="form-control" value="104000"></td></tr>
                                 <tr><td>Agosto</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="45000"></td><td><input type="number" class="form-control" value="90000"></td></tr>
                                 <tr><td>Septiembre</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="48000"></td><td><input type="number" class="form-control" value="96000"></td></tr>
-                                <tr><td>Octubre</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" id="marzoConsumo" value="52000"></td><td><input type="number" class="form-control" value="104000"></td></tr>
+                                <tr><td>Octubre</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" id="octubreConsumo" value="52000"></td><td><input type="number" class="form-control" value="104000"></td></tr>
                                 <tr><td>Noviembre</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="45000"></td><td><input type="number" class="form-control" value="90000"></td></tr>
                                 <tr><td>Diciembre</td><td>Electricidad</td><td><input type="number" class="form-control val-consumo" value="48000"></td><td><input type="number" class="form-control" value="96000"></td></tr>
-    
                             </tbody>
                         </table>
                     </form>
@@ -242,11 +241,11 @@
                 </div>
             </div>
 
-           <!-- BLOQUE 4: INVENTARIO GUIADO DE EQUIPOS -->
+            <!-- BLOQUE 4: INVENTARIO GUIADO DE EQUIPOS -->
             <div id="step-4" class="step-section">
                 <div class="card p-4">
                     <h3><i class="fa-solid fa-list-check text-primary me-2"></i>Bloque 4: Inventario Guiado de Equipos</h3>
-                    <p class="text-muted">Captura por niveles de detalle para concatenar al simulador[cite: 2, 3].</p>
+                    <p class="text-muted">Captura por niveles de detalle para concatenar al simulador.</p>
                     
                     <table class="table table-striped" id="tablaEquipos">
                         <thead>
@@ -286,7 +285,6 @@
                 </div>
             </div>
 
-
             <!-- BLOQUE 5 & DASHBOARDS (RESULTADOS) -->
             <div id="step-5" class="step-section">
                 <div class="card p-4 mb-4">
@@ -295,7 +293,6 @@
                         <button class="btn btn-outline-primary" onclick="window.print()"><i class="fa-solid fa-download me-2"></i>Descargar Reporte</button>
                     </div>
 
-                    <!-- Layout según diseño original (Dashboards simulador.pdf) -->
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <div class="card p-3 border">
@@ -323,7 +320,6 @@
                         </div>
                     </div>
 
-                    <!-- Tabla de Registros de Auditorías -->
                     <h5 class="fw-bold mt-2">Registros de Auditorías</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered text-center align-middle">
@@ -420,7 +416,6 @@
             document.getElementById('ocrSpinner').classList.add('d-none');
             alert("Lectura OCR Completada. Texto extraído:\n\n" + text.substring(0, 150) + "...");
             
-            // Extracción simple mediante RegEx para montos o consumos
             const matchKwh = text.match(/(\d+[\d,.]*)\s*(kWh|kw)/i);
             if(matchKwh) {
                 document.getElementById('marzoConsumo').value = matchKwh[1].replace(',', '');
@@ -440,7 +435,6 @@
         if(chart1) chart1.destroy();
         if(chart2) chart2.destroy();
 
-        // Chart 1: Pico mensual
         const ctx1 = document.getElementById('chartConsumoMensual').getContext('2d');
         chart1 = new Chart(ctx1, {
             type: 'line',
@@ -458,7 +452,6 @@
             options: { responsive: true, plugins: { legend: { display: false } } }
         });
 
-        // Chart 2: Categorías
         const ctx2 = document.getElementById('chartConsumoCategoria').getContext('2d');
         chart2 = new Chart(ctx2, {
             type: 'bar',
