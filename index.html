@@ -113,17 +113,17 @@
                     <div class="ocr-dropzone my-3" onclick="document.getElementById('ocrInput').click()">
                         <i class="fa-solid fa-cloud-arrow-up fa-2x text-muted mb-2"></i>
                         <p class="mb-1">Suba una imagen o fotografía de factura/ficha técnica</p>
-                        <small class="text-muted">Procesa de forma automática lecturas de consumo en kWh y $ para los 12 meses</small>
+                        <small class="text-muted">Procesa de forma automática los datos y genera filas en el histórico de consumos</small>
                         <input type="file" id="ocrInput" accept="image/*" class="d-none" onchange="ejecutarOCR(this)">
                     </div>
                     <div id="ocrSpinner" class="d-none text-center my-3">
                         <div class="spinner-border text-primary" role="status"></div>
-                        <p class="mt-2 text-primary">Procesando imagen con IA OCR y distribuyendo consumos...</p>
+                        <p class="mt-2 text-primary">Procesando imagen con IA OCR y registrando datos...</p>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mt-4 mb-2">
                         <h5 class="fw-bold m-0">Histórico de Consumos Últimos 12 Meses</h5>
-                        <button class="btn btn-success btn-sm" onclick="agregarFilaConsumo()">
+                        <button class="btn btn-success btn-sm" onclick="agregarFilaConsumoManual()">
                             <i class="fa-solid fa-plus me-1"></i> Agregar Mes / Registro
                         </button>
                     </div>
@@ -140,18 +140,7 @@
                                 </tr>
                             </thead>
                             <tbody id="tbodyConsumos">
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Enero"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="45000"></td><td><input type="number" class="form-control form-control-sm" value="90000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Febrero"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="48000"></td><td><input type="number" class="form-control form-control-sm" value="96000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Marzo"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="52000"></td><td><input type="number" class="form-control form-control-sm" value="104000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Abril"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="46000"></td><td><input type="number" class="form-control form-control-sm" value="92000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Mayo"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="45000"></td><td><input type="number" class="form-control form-control-sm" value="90000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Junio"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="48000"></td><td><input type="number" class="form-control form-control-sm" value="96000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Julio"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="52000"></td><td><input type="number" class="form-control form-control-sm" value="104000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Agosto"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="45000"></td><td><input type="number" class="form-control form-control-sm" value="90000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Septiembre"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="48000"></td><td><input type="number" class="form-control form-control-sm" value="96000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Octubre"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="52000"></td><td><input type="number" class="form-control form-control-sm" value="104000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Noviembre"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="45000"></td><td><input type="number" class="form-control form-control-sm" value="90000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
-                                <tr><td><input type="text" class="form-control form-control-sm" value="Diciembre"></td><td><input type="text" class="form-control form-control-sm" value="Electricidad"></td><td><input type="number" class="form-control form-control-sm val-consumo" value="48000"></td><td><input type="number" class="form-control form-control-sm" value="96000"></td><td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td></tr>
+                                <!-- Las filas se agregan manualmente o a través del OCR -->
                             </tbody>
                         </table>
                     </div>
@@ -407,7 +396,6 @@
 <script>
     let chart1, chart2;
 
-    // Navegación corregida mediante dataset
     function showStep(stepIndex) {
         document.querySelectorAll('.step-section').forEach(el => el.classList.remove('active'));
         const targetStep = document.getElementById(`step-${stepIndex}`);
@@ -468,21 +456,28 @@
         alert("Registro guardado correctamente.");
     }
 
-    // Consumos
-    function agregarFilaConsumo() {
+    // Insertar registro de Consumo en la tabla
+    function insertarRegistroConsumo(mes = '', fuente = 'Electricidad', consumo = 0, costo = 0) {
         const tbody = document.getElementById('tbodyConsumos');
         const nuevaFila = document.createElement('tr');
         nuevaFila.innerHTML = `
-            <td><input type="text" class="form-control form-control-sm" placeholder="Mes"></td>
-            <td><input type="text" class="form-control form-control-sm" value="Electricidad"></td>
-            <td><input type="number" class="form-control form-control-sm val-consumo" value="0"></td>
-            <td><input type="number" class="form-control form-control-sm" value="0"></td>
-            <td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td>
+            <td><input type="text" class="form-control form-control-sm" value="${mes}" placeholder="Ej. Enero"></td>
+            <td><input type="text" class="form-control form-control-sm" value="${fuente}" placeholder="Ej. Electricidad"></td>
+            <td><input type="number" class="form-control form-control-sm val-consumo" value="${consumo}"></td>
+            <td><input type="number" class="form-control form-control-sm" value="${costo}"></td>
+            <td>
+                <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFilaGenerica(this)"><i class="fa-solid fa-check"></i></button>
+                <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button>
+            </td>
         `;
         tbody.appendChild(nuevaFila);
     }
 
-    // OCR con Tesseract.js
+    function agregarFilaConsumoManual() {
+        insertarRegistroConsumo('', 'Electricidad', 0, 0);
+    }
+
+    // OCR Inteligente con Tesseract.js: Extrae texto y genera los registros en la tabla
     function ejecutarOCR(fileInput) {
         const file = fileInput.files[0];
         if(!file) return;
@@ -494,19 +489,33 @@
             { logger: m => console.log(m) }
         ).then(({ data: { text } }) => {
             document.getElementById('ocrSpinner').classList.add('d-none');
-            alert("Lectura OCR Completada. Datos actualizados.");
-            
+
+            // Expresiones regulares para detectar patrones comunes de consumo y costo
             const matchKwh = text.match(/(\d+[\d,.]*)\s*(kWh|kw)/i);
-            if(matchKwh) {
-                const valDetectado = matchKwh[1].replace(/,/g, '');
-                const inputsConsumo = document.querySelectorAll('#tbodyConsumos .val-consumo');
-                inputsConsumo.forEach(input => {
-                    input.value = valDetectado;
-                });
+            const matchCosto = text.match(/\$\s*(\d+[\d,.]*)/i) || text.match(/(\d+[\d,.]*)\s*(MXN|USD|\$)/i);
+            
+            // Lista para intentar detectar meses en la imagen
+            const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            let mesDetectado = 'Registro OCR';
+            
+            for (let m of meses) {
+                if (new RegExp(m, 'i').test(text)) {
+                    mesDetectado = m;
+                    break;
+                }
             }
+
+            const valConsumo = matchKwh ? matchKwh[1].replace(/,/g, '') : 0;
+            const valCosto = matchCosto ? matchCosto[1].replace(/,/g, '') : 0;
+
+            // Inserta una nueva fila de registro en la tabla con los datos leídos
+            insertarRegistroConsumo(mesDetectado, 'Electricidad (OCR)', valConsumo, valCosto);
+            
+            alert(`OCR completado. Se ha creado un nuevo registro abajo:\n- Mes/Origen: ${mesDetectado}\n- Consumo: ${valConsumo} kWh\n- Costo: $${valCosto}`);
+            
         }).catch(err => {
             document.getElementById('ocrSpinner').classList.add('d-none');
-            alert("Error procesando OCR. Intente con otra imagen.");
+            alert("Error procesando OCR. Suba una imagen más clara.");
         });
     }
 
