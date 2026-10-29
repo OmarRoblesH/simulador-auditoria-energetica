@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!DOC>
+    <link href="https://cdn.TYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Auditoría Energética & ISO 50001</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap 5 CSS --jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js -->
@@ -247,6 +247,31 @@
                 <div class="card p-4">
                     <h3><i class="fa-solid fa-list-check text-primary me-2"></i>Inventario Guiado de Equipos</h3>
                     <p class="text-muted">Captura por niveles de detalle para concatenar al simulador.</p>
+
+                    <table class="table table-striped" id="tablaEquipos">
+    <thead>
+        <tr>
+            <th>No. Registro</th>
+            <th>Equipo</th>
+            <th>Categoría</th>
+            <th>Consumo / Potencia</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="text" class="form-control input-tabla" value="Clave" data-default="Clave"></td>
+            <td><input type="text" class="form-control input-tabla" value="Item" data-default="Item"></td>
+            <td><input type="text" class="form-control input-tabla" value="Tipo de sistema" data-default="Tipo de sistema"></td>
+            <td><input type="text" class="form-control input-tabla" value="Consumo" data-default="Consumo"></td>
+        </tr>
+        <tr>
+            <td><input type="text" class="form-control input-tabla" value="Clave" data-default="Clave"></td>
+            <td><input type="text" class="form-control input-tabla" value="Item" data-default="Item"></td>
+            <td><input type="text" class="form-control input-tabla" value="Tipo de sistema" data-default="Tipo de sistema"></td>
+            <td><input type="text" class="form-control input-tabla" value="Consumo" data-default="Consumo"></td>
+        </tr>
+    </tbody>
+</table>
                     
                     <table class="table table-striped" id="tablaEquipos">
                         <thead>
@@ -265,8 +290,8 @@
                                 <td>Consumo</td>
                             </tr>
                             <tr>
-                                <input type="text" placeholder="Clave">
-                                <td type="text" placeholder="Item"> </td>
+                                <td></td>
+                                <td></td>
                                 <td> </td>
                                 <td> </td>
                             </tr>
