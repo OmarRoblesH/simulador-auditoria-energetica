@@ -252,59 +252,109 @@
             </div>
 
             <!-- BLOQUE 4: INVENTARIO GUIADO DE EQUIPOS -->
-            <div id="step-4" class="step-section">
-                <div class="card p-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div>
-                            <h3 class="mb-1"><i class="fa-solid fa-list-check text-primary me-2"></i>Inventario Guiado de Equipos</h3>
-                            <p class="text-muted mb-0">Captura por niveles de detalle para concatenar al simulador.</p>
-                        </div>
-                        <button class="btn btn-success" onclick="agregarFila()">
-                            <i class="fa-solid fa-plus me-1"></i> Agregar Registro
-                        </button>
-                    </div>
-                    
-                    <table class="table table-striped align-middle" id="tablaEquipos">
-                        <thead>
-                            <tr>
-                                <th>No. Registro</th>
-                                <th>Equipo</th>
-                                <th>Categoría</th>
-                                <th>Consumo / Potencia</th>
-                                <th style="width: 120px;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbodyEquipos">
-                            <tr>
-                                <td>VT202619OC</td>
-                                <td>Lámpara LED</td>
-                                <td>Sistemas de iluminación</td>
-                                <td>500 kW</td>
-                                <td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td>FE202619A</td>
-                                <td>Minisplit</td>
-                                <td>Generación de frío y climatización</td>
-                                <td>3500 kW</td>
-                                <td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td>GE202619P</td>
-                                <td>Sanitario / Hidro</td>
-                                <td>Agua y agua caliente sanitaria</td>
-                                <td>3000 m³</td>
-                                <td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+<div id="step-4" class="step-section">
+    <div class="card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h3 class="mb-1"><i class="fa-solid fa-list-check text-primary me-2"></i>Inventario Guiado de Equipos</h3>
+                <p class="text-muted mb-0">Gestión e identificación inteligente de activos eléctricos.</p>
+            </div>
+            <button class="btn btn-success" onclick="agregarFilaEquipo()">
+                <i class="fa-solid fa-plus me-1"></i> Agregar Registro
+            </button>
+        </div>
 
-                    <div class="d-flex justify-content-between mt-4">
-                        <button class="btn btn-secondary" onclick="showStep(3)">Anterior</button>
-                        <button class="btn btn-primary" onclick="generarSimulacionYMostrarDashboards()">Generar Resultados <i class="fa-solid fa-chart-line ms-2"></i></button>
-                    </div>
+        <!-- Zona OCR para Placas o Fotos de Equipos -->
+        <div class="card border-primary mb-4 bg-light">
+            <div class="card-body">
+                <h5 class="fw-bold text-primary"><i class="fa-solid fa-camera me-2"></i>Escaneo OCR de Placa Técnica / Aparato Eléctrico</h5>
+                <p class="small text-muted mb-2">Suba una fotografía de la placa de datos técnicos o etiqueta del aparato para clasificarlo e ingresar su consumo automáticamente.</p>
+                
+                <div class="ocr-dropzone" onclick="document.getElementById('ocrEquipoInput').click()">
+                    <i class="fa-solid fa-expand fa-2x text-primary mb-2"></i>
+                    <p class="mb-0 fw-semibold">Haga clic o arrastre aquí la fotografía del equipo/placa</p>
+                    <small class="text-muted">Detecta automáticamente: Minisplit, Lámparas, Motor, Refrigerador, Compresor, etc.</small>
+                    <input type="file" id="ocrEquipoInput" accept="image/*" class="d-none" onchange="ejecutarOCREquipo(this)">
+                </div>
+
+                <div id="ocrEquipoSpinner" class="d-none text-center my-3">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2 text-primary fw-bold">Analizando especificaciones técnicas del equipo...</p>
                 </div>
             </div>
+        </div>
+        
+        <!-- Tabla de Inventario de Equipos -->
+        <div class="table-responsive">
+            <table class="table table-striped align-middle" id="tablaEquipos">
+                <thead class="table-dark">
+                    <tr>
+                        <th>No. Registro</th>
+                        <th>Equipo</th>
+                        <th>Categoría</th>
+                        <th>Consumo / Potencia</th>
+                        <th style="width: 120px;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyEquipos">
+                    <tr>
+                        <td><input type="text" class="form-control form-control-sm" value="VT202619OC"></td>
+                        <td><input type="text" class="form-control form-control-sm" value="Lámpara LED"></td>
+                        <td>
+                            <select class="form-select form-select-sm" onchange="actualizarUnidadEquipo(this)">
+                                <option value="Sistemas de iluminación" selected>Sistemas de iluminación</option>
+                                <option value="Generación de frío y climatización">Generación de frío y climatización</option>
+                                <option value="Generación de calor">Generación de calor</option>
+                                <option value="Fuerza y motores">Fuerza y motores</option>
+                                <option value="Agua y agua caliente sanitaria">Agua y agua caliente sanitaria</option>
+                                <option value="Otros aparatos eléctricos">Otros aparatos eléctricos</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="input-group input-group-sm">
+                                <input type="number" class="form-control input-potencia" value="500">
+                                <span class="input-group-text span-unidad-equipo">W</span>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFilaGenerica(this)"><i class="fa-solid fa-check"></i></button>
+                            <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFilaEquipo(this)"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-control form-control-sm" value="FE202619A"></td>
+                        <td><input type="text" class="form-control form-control-sm" value="Minisplit Inverter"></td>
+                        <td>
+                            <select class="form-select form-select-sm" onchange="actualizarUnidadEquipo(this)">
+                                <option value="Sistemas de iluminación">Sistemas de iluminación</option>
+                                <option value="Generación de frío y climatización" selected>Generación de frío y climatización</option>
+                                <option value="Generación de calor">Generación de calor</option>
+                                <option value="Fuerza y motores">Fuerza y motores</option>
+                                <option value="Agua y agua caliente sanitaria">Agua y agua caliente sanitaria</option>
+                                <option value="Otros aparatos eléctricos">Otros aparatos eléctricos</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="input-group input-group-sm">
+                                <input type="number" class="form-control input-potencia" value="3.5">
+                                <span class="input-group-text span-unidad-equipo">kW</span>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFilaGenerica(this)"><i class="fa-solid fa-check"></i></button>
+                            <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFilaEquipo(this)"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <button class="btn btn-secondary" onclick="showStep(3)">Anterior</button>
+            <button class="btn btn-primary" onclick="generarSimulacionYMostrarDashboards()">Generar Resultados <i class="fa-solid fa-chart-line ms-2"></i></button>
+        </div>
+    </div>
+</div>
 
             <!-- BLOQUE 5: DASHBOARD DE RESULTADOS -->
             <div id="step-5" class="step-section">
@@ -351,6 +401,202 @@
     </div>
 </div>
 
+// Agregar un nuevo registro manual en la tabla de Equipos
+function agregarFilaEquipo(reg = '', nombre = '', categoria = 'Otros aparatos eléctricos', consumo = 0) {
+    const tbody = document.getElementById('tbodyEquipos');
+    const codigoUnico = reg || 'EQ-' + Math.floor(100000 + Math.random() * 900000);
+    const nuevaFila = document.createElement('tr');
+    
+    nuevaFila.innerHTML = `
+        <td><input type="text" class="form-control form-control-sm" value="${codigoUnico}"></td>
+        <td><input type="text" class="form-control form-control-sm" value="${nombre}" placeholder="Ej. Compresor de Aire"></td>
+        <td>
+            <select class="form-select form-select-sm" onchange="actualizarUnidadEquipo(this)">
+                <option value="Sistemas de iluminación" ${categoria === 'Sistemas de iluminación' ? 'selected' : ''}>Sistemas de iluminación</option>
+                <option value="Generación de frío y climatización" ${categoria === 'Generación de frío y climatización' ? 'selected' : ''}>Generación de frío y climatización</option>
+                <option value="Generación de calor" ${categoria === 'Generación de calor' ? 'selected' : ''}>Generación de calor</option>
+                <option value="Fuerza y motores" ${categoria === 'Fuerza y motores' ? 'selected' : ''}>Fuerza y motores</option>
+                <option value="Agua y agua caliente sanitaria" ${categoria === 'Agua y agua caliente sanitaria' ? 'selected' : ''}>Agua y agua caliente sanitaria</option>
+                <option value="Otros aparatos eléctricos" ${categoria === 'Otros aparatos eléctricos' ? 'selected' : ''}>Otros aparatos eléctricos</option>
+            </select>
+        </td>
+        <td>
+            <div class="input-group input-group-sm">
+                <input type="number" class="form-control input-potencia" value="${consumo}">
+                <span class="input-group-text span-unidad-equipo">${categoria === 'Sistemas de iluminación' ? 'W' : 'kW'}</span>
+            </div>
+        </td>
+        <td>
+            <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFilaGenerica(this)"><i class="fa-solid fa-check"></i></button>
+            <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFilaEquipo(this)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+    `;
+    tbody.appendChild(nuevaFila);
+}
+
+// Ajuste automático de unidades según la categoría del equipo
+function actualizarUnidadEquipo(selectElem) {
+    const fila = selectElem.closest('tr');
+    const spanUnidad = fila.querySelector('.span-unidad-equipo');
+    if (selectElem.value === 'Sistemas de iluminación') {
+        spanUnidad.textContent = 'W';
+    } else {
+        spanUnidad.textContent = 'kW';
+    }
+}
+
+// Eliminar fila y actualizar gráficos dinámicamente
+function eliminarFilaEquipo(btn) {
+    const fila = btn.closest('tr');
+    if (fila) {
+        fila.remove();
+        if (document.getElementById('step-5').classList.contains('active')) {
+            renderCharts();
+        }
+    }
+}
+
+// Procesamiento OCR inteligente de etiquetas y equipos eléctricos
+function ejecutarOCREquipo(fileInput) {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    document.getElementById('ocrEquipoSpinner').classList.remove('d-none');
+
+    Tesseract.recognize(
+        file,
+        'spa+eng',
+        { logger: m => console.log(m) }
+    ).then(({ data: { text } }) => {
+        document.getElementById('ocrEquipoSpinner').classList.add('d-none');
+        
+        const textoLimpio = text.toLowerCase();
+        let categoriaDetectada = 'Otros aparatos eléctricos';
+        let nombreDetectado = 'Aparato Eléctrico Detectado';
+        let consumoDetectado = 1.5;
+
+        // Reglas de coincidencia por palabras clave en la etiqueta/foto
+        if (textoLimpio.includes('led') || textoLimpio.includes('lamp') || textoLimpio.includes('foco') || textoLimpio.includes('lumens')) {
+            categoriaDetectada = 'Sistemas de iluminación';
+            nombreDetectado = 'Lámpara / Foco LED';
+            consumoDetectado = 50;
+        } else if (textoLimpio.includes('split') || textoLimpio.includes('aires') || textoLimpio.includes('btu') || textoLimpio.includes('r410a') || textoLimpio.includes('refrigerador')) {
+            categoriaDetectada = 'Generación de frío y climatización';
+            nombreDetectado = 'Aire Acondicionado / Refrigeración';
+            consumoDetectado = 2.2;
+        } else if (textoLimpio.includes('boiler') || textoLimpio.includes('calentador') || textoLimpio.includes('horno') || textoLimpio.includes('caldera')) {
+            categoriaDetectada = 'Generación de calor';
+            nombreDetectado = 'Sistema de Calefacción / Caldera';
+            consumoDetectado = 4.5;
+        } else if (textoLimpio.includes('hp') || textoLimpio.includes('motor') || textoLimpio.includes('bomba') || textoLimpio.includes('rpm') || textoLimpio.includes('kw')) {
+            categoriaDetectada = 'Fuerza y motores';
+            nombreDetectado = 'Motor Eléctrico / Bomba';
+            consumoDetectado = 5.5;
+        }
+
+        // Extracción simple de valores numéricos acompañados de W o kW si se encuentran en el texto
+        const matchKW = text.match(/(\d+[\.,]?\d*)\s*(kw|kw/i);
+        const matchW = text.match(/(\d+[\.,]?\d*)\s*(w|watts)/i);
+
+        if (matchKW) {
+            consumoDetectado = parseFloat(matchKW[1].replace(',', '.'));
+        } else if (matchW && categoriaDetectada === 'Sistemas de iluminación') {
+            consumoDetectado = parseFloat(matchW[1].replace(',', '.'));
+        }
+
+        const registroGenerado = 'OCR-' + Math.floor(1000 + Math.random() * 9000);
+        agregarFilaEquipo(registroGenerado, nombreDetectado, categoriaDetectada, consumoDetectado);
+
+        alert(`¡Equipo escaneado con éxito!\nDetectado: ${nombreDetectado}\nCategoría: ${categoriaDetectada}\nPotencia/Consumo: ${consumoDetectado}`);
+    }).catch(err => {
+        document.getElementById('ocrEquipoSpinner').classList.add('d-none');
+        alert("No se pudo procesar la imagen del equipo. Verifique la claridad de la toma o agregue el registro manualmente.");
+    });
+}
+
+// Renderizado y cálculo acumulativo de consumos para los Dashboards del Bloque 5
+function renderCharts() {
+    if (chart1) chart1.destroy();
+    if (chart2) chart2.destroy();
+
+    // Sumatoria de potencia/consumos dinámicos registrados en la tabla del Bloque 4
+    const acumuladoCategorias = {
+        'Sistemas de iluminación': 0,
+        'Generación de frío y climatización': 0,
+        'Generación de calor': 0,
+        'Fuerza y motores': 0,
+        'Agua y agua caliente sanitaria': 0,
+        'Otros aparatos eléctricos': 0
+    };
+
+    const filasEquipos = document.querySelectorAll('#tbodyEquipos tr');
+    filasEquipos.forEach(fila => {
+        const selectCat = fila.querySelector('select');
+        const inputConsumo = fila.querySelector('.input-potencia');
+        if (selectCat && inputConsumo) {
+            const cat = selectCat.value;
+            let val = parseFloat(inputConsumo.value) || 0;
+            // Si la unidad es Watts, se pasa a kW para unificar la escala del Dashboard
+            if (cat === 'Sistemas de iluminación') val = val / 1000;
+            
+            if (acumuladoCategorias[cat] !== undefined) {
+                acumuladoCategorias[cat] += val;
+            } else {
+                acumuladoCategorias[cat] = val;
+            }
+        }
+    });
+
+    // Gráfica de línea
+    const ctx1 = document.getElementById('chartConsumoMensual').getContext('2d');
+    chart1 = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            datasets: [{
+                label: 'Consumo Estimado (kWh)',
+                data: [1100, 1900, 3800, 2100, 2400, 1800, 2900, 4800, 2200, 2100, 1800, 2300],
+                backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                borderColor: '#2563eb',
+                fill: true,
+                tension: 0.2
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: true } } }
+    });
+
+    // Gráfica de barras alimentada directamente del inventario de equipos
+    const ctx2 = document.getElementById('chartConsumoCategoria').getContext('2d');
+    chart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(acumuladoCategorias),
+            datasets: [{
+                label: 'Potencia Total Instalada (kW)',
+                data: Object.values(acumuladoCategorias),
+                backgroundColor: [
+                    '#3b82f6',
+                    '#06b6d4',
+                    '#ef4444',
+                    '#f59e0b',
+                    '#10b981',
+                    '#6b7280'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Potencia Total por Categoría (kW)' }
+            }
+        }
+    });
+}
+
+
+
+    
 <!-- Scripts Lógicos y Gráficas -->
 <script>
     let chart1, chart2;
