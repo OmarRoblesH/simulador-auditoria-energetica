@@ -24,6 +24,35 @@
         .step-section.active { display: block; }
         .ocr-dropzone { border: 2px dashed #cbd5e1; border-radius: 8px; padding: 25px; text-align: center; background: #f8fafc; cursor: pointer; }
         .ocr-dropzone:hover { background: #f1f5f9; border-color: #2563eb; }
+        
+        /* Estilos miniatura de imagen de equipo */
+        .img-preview-container {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            border: 1px dashed #cbd5e1;
+            background-color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            margin: 0 auto;
+        }
+        .img-preview-container:hover {
+            border-color: #2563eb;
+            background-color: #f1f5f9;
+        }
+        .img-preview-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .img-preview-container i {
+            font-size: 1.3rem;
+            color: #2563eb;
+        }
     </style>
 </head>
 <body>
@@ -35,10 +64,10 @@
             <h5 class="text-white mb-4"><i class="fa-solid fa-bolt text-warning me-2"></i>Simulador ISO 50001</h5>
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link active" data-step="0" onclick="showStep(0)"><i class="fa-solid fa-route me-2"></i>Inicio / Registro</a></li>
-                <li class="nav-item" id="nav-bloque4"><a class="nav-link" data-step="4" onclick="showStep(4)"><i class="fa-solid fa-boxes-stacked me-2"></i>Inventario de equipo</a></li>
-                <li class="nav-item"><a class="nav-link" data-step="1" onclick="showStep(1)"><i class="fa-solid fa-file-invoice-dollar me-2"></i>Datos & OCR</a></li>
+                <li class="nav-item"><a class="nav-link" data-step="1" onclick="showStep(1)"><i class="fa-solid fa-building me-2"></i>Empresas, Edificios y Auditorías</a></li>
                 <li class="nav-item"><a class="nav-link" data-step="2" onclick="showStep(2)"><i class="fa-solid fa-sliders me-2"></i>Evaluación Técnica</a></li>
                 <li class="nav-item"><a class="nav-link" data-step="3" onclick="showStep(3)"><i class="fa-solid fa-award me-2"></i>Auditoría ISO 50001</a></li>
+                <li class="nav-item" id="nav-bloque4"><a class="nav-link" data-step="4" onclick="showStep(4)"><i class="fa-solid fa-boxes-stacked me-2"></i>Inventario de equipo</a></li>
                 <li class="nav-item"><a class="nav-link" data-step="5" onclick="showStep(5)"><i class="fa-solid fa-chart-pie me-2"></i>Consumos</a></li>
             </ul>
         </nav>
@@ -66,97 +95,123 @@
                 </div>
             </div>
 
-            <!-- BLOQUE 1: DATOS GENERALES, FACTURACIÓN Y OCR -->
+            <!-- BLOQUE 1: REGISTRO DE EMPRESA, EDIFICIOS Y AUDITORÍAS -->
             <div id="step-1" class="step-section">
                 <div class="card p-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div>
-                            <h3 class="mb-1"><i class="fa-solid fa-building text-primary me-2"></i>Datos Generales de la Empresa y Facturación</h3>
-                            <p class="text-muted mb-0">Gestión de registros generales del sitio y áreas.</p>
+                    <div class="mb-4">
+                        <h3 class="mb-1"><i class="fa-solid fa-building text-primary me-2"></i>Estructura Organizacional y Auditorías</h3>
+                        <p class="text-muted mb-0">Gestión de empresas, edificios asociados y auditorías programadas por edificio.</p>
+                    </div>
+
+                    <!-- SECCIÓN 1: Registro de la Empresa -->
+                    <div class="card border mb-4 shadow-sm">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold m-0 text-primary"><i class="fa-solid fa-industry me-2"></i>1. Registro de la Empresa</h5>
+                            <button class="btn btn-success btn-sm" onclick="agregarEmpresa()"><i class="fa-solid fa-plus me-1"></i> Nueva Empresa</button>
                         </div>
-                        <button class="btn btn-success" onclick="agregarFilaDatoGeneral()">
-                            <i class="fa-solid fa-plus me-1"></i> Agregar Registro
-                        </button>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped align-middle" id="tablaEmpresas">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre Comercial</th>
+                                            <th>Razón Social</th>
+                                            <th>Fecha Creación</th>
+                                            <th>Clave de Empresa (Auto)</th>
+                                            <th style="width: 80px;">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyEmpresas"></tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Tabla de Datos Generales Interactiva -->
-                    <div class="table-responsive mb-4">
-                        <table class="table table-striped align-middle" id="tablaDatosGenerales">
-                            <thead>
-                                <tr>
-                                    <th>Empresa</th>
-                                    <th>Sitio / Edificio</th>
-                                    <th>Área (m²)</th>
-                                    <th>Días Operación</th>
-                                    <th>Horas/Día</th>
-                                    <th style="width: 120px;">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodyDatosGenerales">
-                                <tr>
-                                    <td><input type="text" class="form-control form-control-sm" value="Ingesa Empresa"></td>
-                                    <td><input type="text" class="form-control form-control-sm" value="Ingresa edificio"></td>
-                                    <td><input type="number" class="form-control form-control-sm" value="500"></td>
-                                    <td><input type="number" class="form-control form-control-sm" value="365"></td>
-                                    <td><input type="number" class="form-control form-control-sm" value="24"></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFilaGenerica(this)"><i class="fa-solid fa-check"></i></button>
-                                        <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <!-- SECCIÓN 2: Edificios por Empresa -->
+                    <div class="card border mb-4 shadow-sm">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold m-0 text-primary"><i class="fa-solid fa-city me-2"></i>2. Edificios de la Empresa</h5>
+                            <button class="btn btn-success btn-sm" onclick="agregarEdificio()"><i class="fa-solid fa-plus me-1"></i> Agregar Edificio</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped align-middle" id="tablaEdificios">
+                                    <thead>
+                                        <tr>
+                                            <th>Clave de Edificio</th>
+                                            <th>Clave de Empresa</th>
+                                            <th>Nombre / Nombre Edificio</th>
+                                            <th>Dirección</th>
+                                            <th>Área (m²)</th>
+                                            <th style="width: 80px;">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyEdificios"></tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Sección de Reconocimiento Fotográfico (OCR) -->
-                    <h5 class="fw-bold mt-4"><i class="fa-solid fa-camera me-2 text-success"></i>Escaneo Inteligente de Tabla / Facturas (OCR)</h5>
-                    <div class="ocr-dropzone my-3" onclick="document.getElementById('ocrInput').click()">
-                        <i class="fa-solid fa-cloud-arrow-up fa-2x text-muted mb-2"></i>
-                        <p class="mb-1">Suba una imagen con la tabla de consumos (como la proporcionada)</p>
-                        <small class="text-muted">Procesa la imagen y aplica reglas automáticas (Electricidad: kW, Agua: m³)</small>
-                        <input type="file" id="ocrInput" accept="image/*" class="d-none" onchange="ejecutarOCR(this)">
-                    </div>
-                    <div id="ocrSpinner" class="d-none text-center my-3">
-                        <div class="spinner-border text-primary" role="status"></div>
-                        <p class="mt-2 text-primary">Procesando imagen y aplicando reglas de consumo...</p>
-                    </div>
-
-                    <div class="d-flex justify-content-between align-items-center mt-4 mb-2">
-                        <h5 class="fw-bold m-0">Histórico de Consumos por Fecha</h5>
-                        <button class="btn btn-success btn-sm" onclick="insertarRegistroConsumo(new Date().toISOString().split('T')[0], 'Electricidad', 0, 0)">
-                            <i class="fa-solid fa-plus me-1"></i> Agregar Registro
-                        </button>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-bordered align-middle mt-2" id="tablaFacturas">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Fuente</th>
-                                    <th>Consumo (Unidad automática)</th>
-                                    <th>Costo ($)</th>
-                                    <th style="width: 120px;">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodyConsumos">
-                                <!-- Filas precargadas automáticamente aplicando las reglas -->
-                            </tbody>
-                        </table>
+                    <!-- SECCIÓN 3: Auditorías Vinculadas al Edificio -->
+                    <div class="card border mb-4 shadow-sm">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold m-0 text-primary"><i class="fa-solid fa-clipboard-check me-2"></i>3. Auditorías por Edificio</h5>
+                            <button class="btn btn-success btn-sm" onclick="agregarAuditoria()"><i class="fa-solid fa-plus me-1"></i> Programar Auditoría</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped align-middle" id="tablaAuditorias">
+                                    <thead>
+                                        <tr>
+                                            <th>Clave de Auditoría</th>
+                                            <th>Edificio Vinculado (Clave Edificio)</th>
+                                            <th>Fecha Auditoría</th>
+                                            <th>Status</th>
+                                            <th>Auditor Asignado</th>
+                                            <th style="width: 80px;">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyAuditorias"></tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">
                         <button class="btn btn-secondary" onclick="showStep(0)">Anterior</button>
-                        <button class="btn btn-primary" onclick="showStep(2)">Siguiente: Bloque 2 <i class="fa-solid fa-arrow-right ms-2"></i></button>
+                        <button class="btn btn-primary" onclick="showStep(2)">Siguiente: Evaluaciones Técnicas <i class="fa-solid fa-arrow-right ms-2"></i></button>
                     </div>
                 </div>
             </div>
 
-            <!-- BLOQUE 2: EVALUACIÓN TÉCNICA DE SISTEMAS -->
+            <!-- BLOQUE 2: EVALUACIÓN TÉCNICA DE SISTEMAS POR AUDITORÍA -->
             <div id="step-2" class="step-section">
                 <div class="card p-4">
                     <h3><i class="fa-solid fa-gears text-primary me-2"></i>Evaluación Técnica de Sistemas</h3>
-                    
+                    <p class="text-muted">Seleccione la auditoría activa para cargar automáticamente los datos de la empresa y del edificio evaluado.</p>
+
+                    <!-- Selector de Auditoría e Información General del Contexto -->
+                    <div class="card bg-light border-primary mb-4">
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold text-primary"><i class="fa-solid fa-key me-1"></i> Seleccionar Auditoría:</label>
+                                    <select id="selectAuditoriaActiva" class="form-select border-primary" onchange="cargarContextoAuditoria()">
+                                        <option value="">-- Seleccione una Auditoría --</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">Empresa / Razón Social:</label>
+                                    <input type="text" id="infoEmpresaAuditoria" class="form-control" readonly placeholder="No seleccionada">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">Edificio / Dirección:</label>
+                                    <input type="text" id="infoEdificioAuditoria" class="form-control" readonly placeholder="No seleccionado">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="accordion" id="accordionBloque2">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
@@ -251,52 +306,50 @@
                 </div>
             </div>
 
-            <!-- BLOQUE 4: INVENTARIO GUIADO DE EQUIPOS -->
+            <!-- BLOQUE 4: INVENTARIO GUIADO DE EQUIPOS CON OCR E IMAGEN -->
             <div id="step-4" class="step-section">
                 <div class="card p-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div>
                             <h3 class="mb-1"><i class="fa-solid fa-list-check text-primary me-2"></i>Inventario Guiado de Equipos</h3>
-                            <p class="text-muted mb-0">Captura por niveles de detalle para concatenar al simulador.</p>
+                            <p class="text-muted mb-0">Captura por niveles de detalle para alimentar los dashboards de consumos.</p>
                         </div>
-                        <button class="btn btn-success" onclick="agregarFila()">
+                        <button class="btn btn-success" onclick="agregarFilaEquipo()">
                             <i class="fa-solid fa-plus me-1"></i> Agregar Registro
                         </button>
                     </div>
                     
+                    <!-- Sección de Escaneo OCR para Equipos / Placas -->
+                    <div class="card border-primary mb-4 bg-light">
+                        <div class="card-body">
+                            <h5 class="fw-bold text-primary"><i class="fa-solid fa-camera me-2"></i>Escaneo OCR de Placa / Aparato Eléctrico</h5>
+                            <p class="small text-muted mb-2">Suba una fotografía de la etiqueta o aparato para detectar su categoría y potencia automáticamente.</p>
+                            
+                            <div class="ocr-dropzone" onclick="document.getElementById('ocrEquipoInput').click()">
+                                <i class="fa-solid fa-cloud-arrow-up fa-2x text-primary mb-2"></i>
+                                <p class="mb-1">Haga clic o arrastre aquí la foto de la placa del equipo</p>
+                                <small class="text-muted">Reconoce lámparas, minisplits, motores, bombas y asigna unidades</small>
+                                <input type="file" id="ocrEquipoInput" accept="image/*" class="d-none" onchange="ejecutarOCREquipo(this)">
+                            </div>
+                            <div id="ocrEquipoSpinner" class="d-none text-center my-3">
+                                <div class="spinner-border text-primary" role="status"></div>
+                                <p class="mt-2 text-primary">Procesando imagen del equipo con OCR...</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <table class="table table-striped align-middle" id="tablaEquipos">
                         <thead>
                             <tr>
                                 <th>No. Registro</th>
+                                <th style="width: 70px; text-align: center;">Imagen</th>
                                 <th>Equipo</th>
                                 <th>Categoría</th>
                                 <th>Consumo / Potencia</th>
-                                <th style="width: 120px;">Acciones</th>
+                                <th style="width: 80px;">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="tbodyEquipos">
-                            <tr>
-                                <td>VT202619OC</td>
-                                <td>Lámpara LED</td>
-                                <td>Sistemas de iluminación</td>
-                                <td>500 kW</td>
-                                <td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td>FE202619A</td>
-                                <td>Minisplit</td>
-                                <td>Generación de frío y climatización</td>
-                                <td>3500 kW</td>
-                                <td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td>GE202619P</td>
-                                <td>Sanitario / Hidro</td>
-                                <td>Agua y agua caliente sanitaria</td>
-                                <td>3000 m³</td>
-                                <td><button class="btn btn-sm btn-outline-danger" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button></td>
-                            </tr>
-                        </tbody>
+                        <tbody id="tbodyEquipos"></tbody>
                     </table>
 
                     <div class="d-flex justify-content-between mt-4">
@@ -306,7 +359,7 @@
                 </div>
             </div>
 
-            <!-- BLOQUE 5: DASHBOARD DE RESULTADOS -->
+            <!-- BLOQUE 5: DASHBOARD DE RESULTADOS DINÁMICO -->
             <div id="step-5" class="step-section">
                 <div class="card p-4 mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -318,10 +371,17 @@
                         <div class="col-md-6">
                             <div class="card p-3 border">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <h6 class="fw-bold m-0">Consumos mensuales</h6>
+                                    <h6 class="fw-bold m-0">Consumos por equipo</h6>
                                     <div>
-                                        <select class="form-select form-select-sm d-inline-block w-auto"><option>Marzo</option></select>
-                                        <select class="form-select form-select-sm d-inline-block w-auto"><option>2026</option></select>
+                                        <select id="selectFiltroCategoria" class="form-select form-select-sm d-inline-block w-auto" onchange="renderChartPorEquipo()">
+                                            <option value="TODAS">Todas las categorías</option>
+                                            <option value="Sistemas de iluminación">Sistemas de iluminación</option>
+                                            <option value="Generación de frío y climatización">Generación de frío y climatización</option>
+                                            <option value="Generación de calor">Generación de calor</option>
+                                            <option value="Fuerza y motores">Fuerza y motores</option>
+                                            <option value="Agua y agua caliente sanitaria">Agua y agua caliente sanitaria</option>
+                                            <option value="Otros aparatos eléctricos">Otros aparatos eléctricos</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <canvas id="chartConsumoMensual" height="200"></canvas>
@@ -330,10 +390,9 @@
                         <div class="col-md-6">
                             <div class="card p-3 border">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <h6 class="fw-bold m-0">Consumos por categoría</h6>
+                                    <h6 class="fw-bold m-0">Consumos por categoría (Inventario)</h6>
                                     <div>
-                                        <select class="form-select form-select-sm d-inline-block w-auto"><option>Año</option></select>
-                                        <select class="form-select form-select-sm d-inline-block w-auto"><option>Mes</option></select>
+                                        <select class="form-select form-select-sm d-inline-block w-auto"><option>Total</option></select>
                                     </div>
                                 </div>
                                 <canvas id="chartConsumoCategoria" height="200"></canvas>
@@ -351,30 +410,20 @@
     </div>
 </div>
 
-<!-- Scripts Lógicos y Gráficas -->
+<!-- Scripts Lógicos -->
 <script>
     let chart1, chart2;
 
-    // Precargar registros adaptados con Fechas y la regla de unidades según la imagen de referencia[cite: 2]
     window.addEventListener('DOMContentLoaded', () => {
-        const datosIniciales = [
-            { fecha: '2026-01-15', fuente: 'Electricidad', valor: '1,000', costo: '700' },
-            { fecha: '2026-02-15', fuente: 'Agua', valor: '2,000', costo: '1400' },
-            { fecha: '2026-03-15', fuente: 'Electricidad', valor: '4,000', costo: '2800' },
-            { fecha: '2026-04-15', fuente: 'Gas', valor: '2,000', costo: '1400' },
-            { fecha: '2026-05-15', fuente: 'Agua', valor: '2,000', costo: '1400' },
-            { fecha: '2026-06-15', fuente: 'Agua', valor: '50', costo: '35' },
-            { fecha: '2026-07-15', fuente: 'Electricidad', valor: '1,000', costo: '700' },
-            { fecha: '2026-08-15', fuente: 'Agua', valor: '5,000', costo: '3500' },
-            { fecha: '2026-09-15', fuente: 'Electricidad', valor: '300', costo: '210' },
-            { fecha: '2026-10-15', fuente: 'Agua', valor: '2,000', costo: '1400' },
-            { fecha: '2026-11-15', fuente: 'Electricidad', valor: '1,000', costo: '700' },
-            { fecha: '2026-12-15', fuente: 'Electricidad', valor: '2,000', costo: '1400' }
-        ];
+        // Precarga de Empresa, Edificios y Auditorías iniciales
+        agregarEmpresa("JYRSA PPE", "JYRSA Industrial S.A. de C.V.", "2026-02-01");
+        agregarEdificio("EDIF-01", "JYRSA-2026-02-01", "Planta Principal", "Blvd. Industrial #123, Monterrey", 2500);
+        agregarAuditoria("AUD-2026-001", "EDIF-01", "2026-03-10", "en proceso", "Ing. Omar Pérez");
 
-        datosIniciales.forEach(d => {
-            insertarRegistroConsumo(d.fecha, d.fuente, d.valor, d.costo);
-        });
+        // Inicializar filas predeterminadas de equipos
+        agregarFilaEquipo('VT202619OC', 'Lámpara LED', 'Sistemas de iluminación', 500);
+        agregarFilaEquipo('FE202619A', 'Minisplit', 'Generación de frío y climatización', 3.5);
+        agregarFilaEquipo('GE202619P', 'Sanitario / Hidro', 'Agua y agua caliente sanitaria', 3.0);
     });
 
     function showStep(stepIndex) {
@@ -389,6 +438,14 @@
                 el.classList.remove('active');
             }
         });
+
+        if (stepIndex === 2) {
+            actualizarSelectoresAuditorias();
+        }
+
+        if (stepIndex === 5) {
+            renderCharts();
+        }
     }
 
     function evaluarCompuerta0() {
@@ -415,91 +472,315 @@
         }
     }
 
-    // Datos Generales
-    function agregarFilaDatoGeneral() {
-        const tbody = document.getElementById('tbodyDatosGenerales');
-        const nuevaFila = document.createElement('tr');
-        nuevaFila.innerHTML = `
-            <td><input type="text" class="form-control form-control-sm" placeholder="Empresa"></td>
-            <td><input type="text" class="form-control form-control-sm" placeholder="Sitio"></td>
-            <td><input type="number" class="form-control form-control-sm" placeholder="0"></td>
-            <td><input type="number" class="form-control form-control-sm" value="365"></td>
-            <td><input type="number" class="form-control form-control-sm" value="24"></td>
-            <td>
-                <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFilaGenerica(this)"><i class="fa-solid fa-check"></i></button>
-                <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button>
-            </td>
+    // --- SECCIÓN 1: EMPRESAS ---
+    function agregarEmpresa(nombre = '', razon = '', fecha = '') {
+        const tbody = document.getElementById('tbodyEmpresas');
+        const tr = document.createElement('tr');
+        const fechaActual = fecha || new Date().toISOString().split('T')[0];
+        
+        tr.innerHTML = `
+            <td><input type="text" class="form-control form-control-sm input-nombre-emp" value="${nombre}" placeholder="Nombre Comercial" oninput="actualizarClaveEmpresa(this)"></td>
+            <td><input type="text" class="form-control form-control-sm input-razon-emp" value="${razon}" placeholder="Razón Social"></td>
+            <td><input type="date" class="form-control form-control-sm input-fecha-emp" value="${fechaActual}" onchange="actualizarClaveEmpresa(this)"></td>
+            <td><input type="text" class="form-control form-control-sm fw-bold text-primary input-clave-emp" readonly value="${generarClaveEmpresa(nombre || 'Empresa', fechaActual)}"></td>
+            <td><button class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove(); actualizarSelectoresEmpresas();"><i class="fa-solid fa-trash"></i></button></td>
         `;
-        tbody.appendChild(nuevaFila);
+        tbody.appendChild(tr);
+        actualizarSelectoresEmpresas();
     }
 
-    function guardarFilaGenerica(btn) {
-        alert("Registro guardado correctamente.");
+    function generarClaveEmpresa(nombre, fecha) {
+        const slug = nombre.trim().toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 5);
+        return `${slug || 'EMP'}-${fecha}`;
     }
 
-    // Función que aplica las reglas de unidad según la fuente seleccionada o escrita
-    function actualizarUnidadConsumo(inputFuente) {
-        const fila = inputFuente.closest('tr');
-        const inputUnidad = fila.querySelector('.input-consumo');
-        const spanUnidad = fila.querySelector('.span-unidad');
-        const fuenteVal = inputFuente.value.trim().toLowerCase();
+    function actualizarClaveEmpresa(input) {
+        const tr = input.closest('tr');
+        const nombre = tr.querySelector('.input-nombre-emp').value;
+        const fecha = tr.querySelector('.input-fecha-emp').value;
+        tr.querySelector('.input-clave-emp').value = generarClaveEmpresa(nombre, fecha);
+        actualizarSelectoresEmpresas();
+    }
 
-        if (fuenteVal.includes('electricidad') || fuenteVal.includes('luz')) {
-            spanUnidad.textContent = 'kW';
-        } else if (fuenteVal.includes('agua') || fuenteVal.includes('hidro')) {
-            spanUnidad.textContent = 'm³';
-        } else {
-            spanUnidad.textContent = 'unidades';
+    function actualizarSelectoresEmpresas() {
+        const opciones = [];
+        document.querySelectorAll('#tbodyEmpresas tr').forEach(tr => {
+            const clave = tr.querySelector('.input-clave-emp')?.value;
+            const nombre = tr.querySelector('.input-nombre-emp')?.value;
+            if(clave) opciones.push({ clave, nombre });
+        });
+
+        document.querySelectorAll('.select-clave-empresa').forEach(sel => {
+            const valActual = sel.value;
+            sel.innerHTML = '<option value="">-- Seleccionar Empresa --</option>';
+            opciones.forEach(item => {
+                const opt = document.createElement('option');
+                opt.value = item.clave;
+                opt.textContent = `${item.clave} (${item.nombre})`;
+                if(item.clave === valActual) opt.selected = true;
+                sel.appendChild(opt);
+            });
+        });
+    }
+
+    // --- SECCIÓN 2: EDIFICIOS ---
+    function agregarEdificio(claveEdif = '', claveEmp = '', nombreEdif = '', dir = '', area = 0) {
+        const tbody = document.getElementById('tbodyEdificios');
+        const tr = document.createElement('tr');
+        const cEdif = claveEdif || 'EDIF-' + Math.floor(10 + Math.random() * 90);
+
+        tr.innerHTML = `
+            <td><input type="text" class="form-control form-control-sm fw-bold input-clave-edificio" value="${cEdif}" readonly></td>
+            <td>
+                <select class="form-select form-select-sm select-clave-empresa">
+                    <option value="">-- Seleccionar Empresa --</option>
+                </select>
+            </td>
+            <td><input type="text" class="form-control form-control-sm input-nombre-edificio" value="${nombreEdif}" placeholder="Nombre Edificio"></td>
+            <td><input type="text" class="form-control form-control-sm input-dir-edificio" value="${dir}" placeholder="Dirección"></td>
+            <td><input type="number" class="form-control form-control-sm" value="${area}" placeholder="0"></td>
+            <td><button class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove(); actualizarSelectoresEdificios();"><i class="fa-solid fa-trash"></i></button></td>
+        `;
+        tbody.appendChild(tr);
+        actualizarSelectoresEmpresas();
+        if(claveEmp) {
+            tr.querySelector('.select-clave-empresa').value = claveEmp;
+        }
+        actualizarSelectoresEdificios();
+    }
+
+    function actualizarSelectoresEdificios() {
+        const opciones = [];
+        document.querySelectorAll('#tbodyEdificios tr').forEach(tr => {
+            const cEdif = tr.querySelector('.input-clave-edificio')?.value;
+            const nEdif = tr.querySelector('.input-nombre-edificio')?.value;
+            if(cEdif) opciones.push({ cEdif, nEdif });
+        });
+
+        document.querySelectorAll('.select-clave-edificio').forEach(sel => {
+            const valActual = sel.value;
+            sel.innerHTML = '<option value="">-- Seleccionar Edificio --</option>';
+            opciones.forEach(item => {
+                const opt = document.createElement('option');
+                opt.value = item.cEdif;
+                opt.textContent = `${item.cEdif} - ${item.nEdif || 'Sin nombre'}`;
+                if(item.cEdif === valActual) opt.selected = true;
+                sel.appendChild(opt);
+            });
+        });
+    }
+
+    // --- SECCIÓN 3: AUDITORÍAS ---
+    function agregarAuditoria(claveAud = '', claveEdif = '', fechaAud = '', status = 'borrador', auditor = '') {
+        const tbody = document.getElementById('tbodyAuditorias');
+        const tr = document.createElement('tr');
+        const cAud = claveAud || 'AUD-' + new Date().getFullYear() + '-' + Math.floor(100 + Math.random() * 900);
+        const fAud = fechaAud || new Date().toISOString().split('T')[0];
+
+        tr.innerHTML = `
+            <td><input type="text" class="form-control form-control-sm fw-bold text-success input-clave-auditoria" value="${cAud}"></td>
+            <td>
+                <select class="form-select form-select-sm select-clave-edificio">
+                    <option value="">-- Seleccionar Edificio --</option>
+                </select>
+            </td>
+            <td><input type="date" class="form-control form-control-sm" value="${fAud}"></td>
+            <td>
+                <select class="form-select form-select-sm">
+                    <option value="borrador" ${status === 'borrador' ? 'selected' : ''}>Borrador</option>
+                    <option value="en proceso" ${status === 'en proceso' ? 'selected' : ''}>En proceso</option>
+                    <option value="terminada" ${status === 'terminada' ? 'selected' : ''}>Terminada</option>
+                </select>
+            </td>
+            <td><input type="text" class="form-control form-control-sm" value="${auditor}" placeholder="Nombre del Auditor"></td>
+            <td><button class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove(); actualizarSelectoresAuditorias();"><i class="fa-solid fa-trash"></i></button></td>
+        `;
+        tbody.appendChild(tr);
+        actualizarSelectoresEdificios();
+        if(claveEdif) {
+            tr.querySelector('.select-clave-edificio').value = claveEdif;
+        }
+        actualizarSelectoresAuditorias();
+    }
+
+    function actualizarSelectoresAuditorias() {
+        const sel = document.getElementById('selectAuditoriaActiva');
+        if(!sel) return;
+        const valActual = sel.value;
+        sel.innerHTML = '<option value="">-- Seleccione una Auditoría --</option>';
+
+        document.querySelectorAll('#tbodyAuditorias tr').forEach(tr => {
+            const cAud = tr.querySelector('.input-clave-auditoria')?.value;
+            const cEdif = tr.querySelector('.select-clave-edificio')?.value;
+            if(cAud) {
+                const opt = document.createElement('option');
+                opt.value = cAud;
+                opt.dataset.edificio = cEdif;
+                opt.textContent = `${cAud} (Edificio: ${cEdif || 'N/A'})`;
+                if(cAud === valActual) opt.selected = true;
+                sel.appendChild(opt);
+            }
+        });
+    }
+
+    // --- VINCULACIÓN Y CARGA DE DATOS EN EVALUACIÓN TÉCNICA (BLOQUE 2) ---
+    function cargarContextoAuditoria() {
+        const selAud = document.getElementById('selectAuditoriaActiva');
+        const opt = selAud.options[selAud.selectedIndex];
+        const inputEmpresa = document.getElementById('infoEmpresaAuditoria');
+        const inputEdificio = document.getElementById('infoEdificioAuditoria');
+
+        if (!opt || !opt.value) {
+            inputEmpresa.value = 'No seleccionada';
+            inputEdificio.value = 'No seleccionado';
+            return;
+        }
+
+        const claveEdificioBuscado = opt.dataset.edificio;
+        let direccionEdificio = '';
+        let claveEmpresaBuscada = '';
+
+        // Buscar el edificio
+        document.querySelectorAll('#tbodyEdificios tr').forEach(tr => {
+            const cEdif = tr.querySelector('.input-clave-edificio')?.value;
+            if(cEdif === claveEdificioBuscado) {
+                claveEmpresaBuscada = tr.querySelector('.select-clave-empresa')?.value;
+                const nomEdif = tr.querySelector('.input-nombre-edificio')?.value || '';
+                const dirEdif = tr.querySelector('.input-dir-edificio')?.value || '';
+                direccionEdificio = `${nomEdif} - ${dirEdif}`.trim();
+            }
+        });
+
+        // Buscar la empresa
+        let nombreEmpresa = '';
+        let razonEmpresa = '';
+        document.querySelectorAll('#tbodyEmpresas tr').forEach(tr => {
+            const cEmp = tr.querySelector('.input-clave-emp')?.value;
+            if(cEmp === claveEmpresaBuscada) {
+                nombreEmpresa = tr.querySelector('.input-nombre-emp')?.value || '';
+                razonEmpresa = tr.querySelector('.input-razon-emp')?.value || '';
+            }
+        });
+
+        inputEmpresa.value = nombreEmpresa ? `${nombreEmpresa} (${razonEmpresa})` : 'Empresa no encontrada';
+        inputEdificio.value = direccionEdificio || 'Edificio no encontrado';
+    }
+
+    // --- BLOQUE 4: INVENTARIO GUIADO & OCR DE EQUIPOS ---
+    function obtenerIconoCategoria(categoria) {
+        switch (categoria) {
+            case 'Sistemas de iluminación': return 'fa-lightbulb';
+            case 'Generación de frío y climatización': return 'fa-snowflake';
+            case 'Generación de calor': return 'fa-fire-flame-curved';
+            case 'Fuerza y motores': return 'fa-gears';
+            case 'Agua y agua caliente sanitaria': return 'fa-faucet-drip';
+            default: return 'fa-plug';
         }
     }
 
-    // Insertar registro de Consumo con Fecha y Unidad dinámica
-    function insertarRegistroConsumo(fecha = '', fuente = 'Electricidad', consumo = 0, costo = 0) {
-        const tbody = document.getElementById('tbodyConsumos');
-        const fuenteLower = fuente.toLowerCase();
-        let unidadInicial = 'kW';
-        if (fuenteLower.includes('agua')) unidadInicial = 'm³';
-
+    function agregarFilaEquipo(reg = '', nombre = '', categoria = 'Otros aparatos eléctricos', consumo = 0, imgSrc = null) {
+        const tbody = document.getElementById('tbodyEquipos');
+        const codigo = reg || 'EQ-' + Math.floor(1000 + Math.random() * 9000);
         const nuevaFila = document.createElement('tr');
+        const iconoClase = obtenerIconoCategoria(categoria);
+
+        let contenidoImagen = imgSrc ? `<img src="${imgSrc}" alt="Equipo">` : `<i class="fa-solid ${iconoClase} icono-cat"></i>`;
+        
         nuevaFila.innerHTML = `
-            <td><input type="date" class="form-control form-control-sm" value="${fecha}"></td>
-            <td><input type="text" class="form-control form-control-sm input-fuente" value="${fuente}" placeholder="Ej. Electricidad o Agua" oninput="actualizarUnidadConsumo(this)"></td>
-            <td>
-                <div class="input-group input-group-sm">
-                    <input type="text" class="form-control input-consumo val-consumo" value="${consumo}">
-                    <span class="input-group-text span-unidad fw-bold">${unidadInicial}</span>
+            <td><input type="text" class="form-control form-control-sm" value="${codigo}"></td>
+            <td style="text-align: center;">
+                <div class="img-preview-container" title="Subir o cambiar imagen" onclick="this.querySelector('.file-input-equipo').click()">
+                    ${contenidoImagen}
+                    <input type="file" class="d-none file-input-equipo" accept="image/*" onchange="cargarImagenFila(this)">
                 </div>
             </td>
-            <td><input type="text" class="form-control form-control-sm" value="${costo}"></td>
+            <td><input type="text" class="form-control form-control-sm input-nombre-eq" value="${nombre}" placeholder="Ingresa equipo"></td>
             <td>
-                <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFilaGenerica(this)"><i class="fa-solid fa-check"></i></button>
-                <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button>
+                <select class="form-select form-select-sm select-cat" onchange="actualizarUnidadEquipo(this)">
+                    <option value="Sistemas de iluminación" ${categoria === 'Sistemas de iluminación' ? 'selected' : ''}>Sistemas de iluminación</option>
+                    <option value="Generación de frío y climatización" ${categoria === 'Generación de frío y climatización' ? 'selected' : ''}>Generación de frío y climatización</option>
+                    <option value="Generación de calor" ${categoria === 'Generación de calor' ? 'selected' : ''}>Generación de calor</option>
+                    <option value="Fuerza y motores" ${categoria === 'Fuerza y motores' ? 'selected' : ''}>Fuerza y motores</option>
+                    <option value="Agua y agua caliente sanitaria" ${categoria === 'Agua y agua caliente sanitaria' ? 'selected' : ''}>Agua y agua caliente sanitaria</option>
+                    <option value="Otros aparatos eléctricos" ${categoria === 'Otros aparatos eléctricos' ? 'selected' : ''}>Otros aparatos eléctricos</option>
+                </select>
             </td>
+            <td>
+                <div class="input-group input-group-sm">
+                    <input type="number" class="form-control input-potencia" value="${consumo}">
+                    <span class="input-group-text span-unidad-eq fw-bold">${categoria === 'Sistemas de iluminación' ? 'W' : 'kW'}</span>
+                </div>
+            </td>
+            <td><button class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove()"><i class="fa-solid fa-trash"></i></button></td>
         `;
         tbody.appendChild(nuevaFila);
     }
 
-    // Escaneo Inteligente OCR con Tesseract.js
-    function ejecutarOCR(fileInput) {
+    function cargarImagenFila(fileInput) {
+        const file = fileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const container = fileInput.closest('.img-preview-container');
+            container.innerHTML = `<img src="${e.target.result}" alt="Equipo"><input type="file" class="d-none file-input-equipo" accept="image/*" onchange="cargarImagenFila(this)">`;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function actualizarUnidadEquipo(selectElem) {
+        const fila = selectElem.closest('tr');
+        const spanUnidad = fila.querySelector('.span-unidad-eq');
+        const categoria = selectElem.value;
+        spanUnidad.textContent = (categoria === 'Sistemas de iluminación') ? 'W' : 'kW';
+
+        const container = fila.querySelector('.img-preview-container');
+        if (!container.querySelector('img')) {
+            container.innerHTML = `<i class="fa-solid ${obtenerIconoCategoria(categoria)} icono-cat"></i><input type="file" class="d-none file-input-equipo" accept="image/*" onchange="cargarImagenFila(this)">`;
+        }
+    }
+
+    function ejecutarOCREquipo(fileInput) {
         const file = fileInput.files[0];
         if(!file) return;
 
-        document.getElementById('ocrSpinner').classList.remove('d-none');
-        Tesseract.recognize(
-            file,
-            'spa',
-            { logger: m => console.log(m) }
-        ).then(({ data: { text } }) => {
-            document.getElementById('ocrSpinner').classList.add('d-none');
-            alert("Imagen analizada mediante OCR. Se ha agregado un registro basado en la lectura.");
-            
-            // Ejemplo detectando filas o valores genéricos del escaneo aplicado
-            insertarRegistroConsumo(new Date().toISOString().split('T')[0], 'Electricidad', '1,500', '950');
-            
-        }).catch(err => {
-            document.getElementById('ocrSpinner').classList.add('d-none');
-            alert("Error procesando OCR. Intente nuevamente con una imagen clara.");
-        });
+        document.getElementById('ocrEquipoSpinner').classList.remove('d-none');
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgSrcData = e.target.result;
+            Tesseract.recognize(file, 'spa+eng', { logger: m => console.log(m) }).then(({ data: { text } }) => {
+                document.getElementById('ocrEquipoSpinner').classList.add('d-none');
+                
+                const texto = text.toLowerCase();
+                let cat = 'Otros aparatos eléctricos';
+                let nom = 'Equipo Detectado OCR';
+                let pot = 2.0;
+
+                if (texto.includes('led') || texto.includes('lamp') || texto.includes('foco')) {
+                    cat = 'Sistemas de iluminación';
+                    nom = 'Lámpara LED';
+                    pot = 60;
+                } else if (texto.includes('split') || texto.includes('btu') || texto.includes('refrigerador')) {
+                    cat = 'Generación de frío y climatización';
+                    nom = 'Minisplit / Climatizador';
+                    pot = 2.8;
+                } else if (texto.includes('boiler') || texto.includes('calentador') || texto.includes('caldera')) {
+                    cat = 'Generación de calor';
+                    nom = 'Sistema de Calor / Caldera';
+                    pot = 4.0;
+                } else if (texto.includes('motor') || texto.includes('bomba') || texto.includes('hp')) {
+                    cat = 'Fuerza y motores';
+                    nom = 'Motor / Bomba';
+                    pot = 3.5;
+                }
+
+                agregarFilaEquipo('OCR-' + Math.floor(1000 + Math.random()*9000), nom, cat, pot, imgSrcData);
+                alert("¡Placa escaneada con éxito! Se añadió el equipo con su imagen.");
+            }).catch(() => {
+                document.getElementById('ocrEquipoSpinner').classList.add('d-none');
+                alert("Error procesando OCR del equipo.");
+            });
+        };
+        reader.readAsDataURL(file);
     }
 
     function generarSimulacionYMostrarDashboards() {
@@ -507,66 +788,106 @@
         renderCharts();
     }
 
-    function renderCharts() {
+    // --- GRÁFICAS DE CONSUMO Y RESULTADOS (BLOQUE 5) ---
+    function renderChartPorEquipo() {
         if(chart1) chart1.destroy();
-        if(chart2) chart2.destroy();
+
+        const catSeleccionada = document.getElementById('selectFiltroCategoria').value;
+        const labelsEquipos = [];
+        const dataValores = [];
+
+        document.querySelectorAll('#tbodyEquipos tr').forEach(fila => {
+            const inputNom = fila.querySelector('.input-nombre-eq');
+            const selectCat = fila.querySelector('.select-cat');
+            const inputPot = fila.querySelector('.input-potencia');
+
+            if (inputNom && selectCat && inputPot) {
+                const nombre = inputNom.value || 'Equipo sin nombre';
+                const categoria = selectCat.value;
+                let potencia = parseFloat(inputPot.value) || 0;
+
+                if (categoria === 'Sistemas de iluminación') {
+                    potencia = potencia / 1000;
+                }
+
+                if (catSeleccionada === 'TODAS' || categoria === catSeleccionada) {
+                    labelsEquipos.push(nombre);
+                    dataValores.push(potencia);
+                }
+            }
+        });
 
         const ctx1 = document.getElementById('chartConsumoMensual').getContext('2d');
         chart1 = new Chart(ctx1, {
-            type: 'line',
+            type: 'bar',
             data: {
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                labels: labelsEquipos.length > 0 ? labelsEquipos : ['Sin equipos registrados'],
                 datasets: [{
-                    label: 'Consumos',
-                    data: [1000, 2000, 4000, 2000, 2000, 50, 1000, 5000, 300, 2000, 1000, 2000],
-                    backgroundColor: 'rgba(67, 56, 202, 0.2)',
-                    borderColor: '#4338ca',
-                    fill: true,
-                    tension: 0.1
+                    label: 'Consumo / Potencia (kW)',
+                    data: dataValores.length > 0 ? dataValores : [0],
+                    backgroundColor: '#2563eb',
+                    borderRadius: 5
                 }]
             },
-            options: { responsive: true, plugins: { legend: { display: false } } }
+            options: { 
+                responsive: true, 
+                plugins: { 
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: catSeleccionada === 'TODAS' ? 'Potencia de Todos los Equipos (kW)' : `Equipos en: ${catSeleccionada} (kW)`
+                    }
+                } 
+            }
+        });
+    }
+
+    function renderCharts() {
+        renderChartPorEquipo();
+
+        if(chart2) chart2.destroy();
+
+        const categoriasTotales = {
+            'Sistemas de iluminación': 0,
+            'Generación de frío y climatización': 0,
+            'Generación de calor': 0,
+            'Fuerza y motores': 0,
+            'Agua y agua caliente sanitaria': 0,
+            'Otros aparatos eléctricos': 0
+        };
+
+        document.querySelectorAll('#tbodyEquipos tr').forEach(fila => {
+            const selectCat = fila.querySelector('.select-cat');
+            const inputPot = fila.querySelector('.input-potencia');
+            if(selectCat && inputPot) {
+                const c = selectCat.value;
+                let p = parseFloat(inputPot.value) || 0;
+                if(c === 'Sistemas de iluminación') p = p / 1000;
+                if(categoriasTotales[c] !== undefined) {
+                    categoriasTotales[c] += p;
+                }
+            }
         });
 
         const ctx2 = document.getElementById('chartConsumoCategoria').getContext('2d');
         chart2 = new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: ['Electricidad', 'Agua', 'Gas'],
+                labels: Object.keys(categoriasTotales),
                 datasets: [{
-                    label: 'Consumo por Fuente',
-                    data: [9300, 11050, 2000],
-                    backgroundColor: '#8685c9'
+                    label: 'Potencia Total (kW)',
+                    data: Object.values(categoriasTotales),
+                    backgroundColor: ['#4338ca', '#3b82f6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444']
                 }]
             },
-            options: { responsive: true, plugins: { legend: { display: false } } }
+            options: { 
+                responsive: true, 
+                plugins: { 
+                    legend: { display: false },
+                    title: { display: true, text: 'Potencia Instalada por Categoría (kW)' }
+                } 
+            }
         });
-    }
-
-    // Equipos
-    function agregarFila() {
-        const tbody = document.getElementById('tbodyEquipos');
-        const nuevaFila = document.createElement('tr');
-        nuevaFila.innerHTML = `
-            <td><input type="text" class="form-control form-control-sm" placeholder="Ingresa clave" /></td>
-            <td><input type="text" class="form-control form-control-sm" placeholder="Ingresa equipo" /></td>
-            <td><input type="text" class="form-control form-control-sm" placeholder="Ingresa categoría" /></td>
-            <td><input type="text" class="form-control form-control-sm" placeholder="Ingresa consumo" /></td>
-            <td>
-                <button class="btn btn-sm btn-outline-success me-1" title="Guardar" onclick="guardarFila(this)"><i class="fa-solid fa-check"></i></button>
-                <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminarFila(this)"><i class="fa-solid fa-trash"></i></button>
-            </td>
-        `;
-        tbody.appendChild(nuevaFila);
-    }
-
-    function guardarFila(btn) {
-        alert("Fila guardada exitosamente.");
-    }
-
-    function eliminarFila(btn) {
-        const fila = btn.closest('tr');
-        if(fila) fila.remove();
     }
 </script>
 
